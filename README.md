@@ -1,4 +1,4 @@
-# noise
+# noise [![Build Status](https://travis-ci.org/cacteye/noise.png)](https://travis-ci.org/cacteye/noise)
 
 **noise** is a procedural noise generation library written for Rust.
 
