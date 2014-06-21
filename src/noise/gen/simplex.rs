@@ -17,12 +17,6 @@ macro_rules! vec3(
   );
 )
 
-macro_rules! vec4(
-  ($x: expr, $y: expr, $z: expr, $w: expr) => (
-      Vec4 {x: $x, y: $y, z: $z, w: $w}
-  );
-)
-
 static GRAD3: [Vec3<f64>, ..12] = [
   vec3!( 1.0, 1.0, 0.0), vec3!(-1.0, 1.0, 0.0), vec3!(1.0,-1.0, 0.0), vec3!(-1.0,-1.0, 0.0),
   vec3!( 1.0, 0.0, 1.0), vec3!(-1.0, 0.0, 1.0), vec3!(1.0, 0.0,-1.0), vec3!(-1.0, 0.0,-1.0),
