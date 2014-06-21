@@ -115,6 +115,10 @@ impl NoiseGen for Simplex {
   /// ```
   #[allow(uppercase_variables)]
   fn noise2d(&self, xin: f64, yin: f64) -> f64 {
+    // View the Vecs as slices
+    let perm = self.perm.as_slice();
+    let permMod12 = self.permMod12.as_slice();
+
     // Noise contributions from the three corners
     let mut n0: f64;
     let mut n1: f64;
@@ -160,9 +164,9 @@ impl NoiseGen for Simplex {
     let ii: uint = (i & 255) as uint;
     let jj: uint = (j & 255) as uint;
     // Work out the hashed gradient indices of the three simplex corners
-    let gi0: uint = *self.permMod12.get(ii + (*self.perm.get(jj) as uint)) as uint;
-    let gi1: uint = *self.permMod12.get(ii + i1 + (*self.perm.get(jj + j1) as uint)) as uint;
-    let gi2: uint = *self.permMod12.get(ii + 1 + (*self.perm.get(jj + 1) as uint)) as uint;
+    let gi0: uint = permMod12[ii + perm[jj] as uint] as uint;
+    let gi1: uint = permMod12[ii + i1 + (perm[jj + j1] as uint)] as uint;
+    let gi2: uint = permMod12[ii + 1 + (perm[jj + 1] as uint)] as uint;
 
     // Calculate the contribution from the three corners
     let mut t0: f64 = 0.5 - x0 * x0 - y0 * y0;
@@ -211,6 +215,10 @@ impl NoiseGen for Simplex {
   /// ```
   #[allow(uppercase_variables)]
   fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
+    // View the Vecs as slices
+    let perm = self.perm.as_slice();
+    let permMod12 = self.permMod12.as_slice();
+
     // Noise contributions from the four corners
     let mut n0: f64;
     let mut n1: f64;
@@ -312,10 +320,10 @@ impl NoiseGen for Simplex {
     let jj: uint = (j & 255) as uint;
     let kk: uint = (k & 255) as uint;
     // Work out the hashed gradient indices of the four simplex corners
-    let gi0: uint = *self.permMod12.get(ii + (*self.perm.get(jj + (*self.perm.get(kk) as uint)) as uint)) as uint;
-    let gi1: uint = *self.permMod12.get(ii + i1 + (*self.perm.get(jj + j1 + (*self.perm.get(kk + k1) as uint)) as uint)) as uint;
-    let gi2: uint = *self.permMod12.get(ii + i2 + (*self.perm.get(jj + j2 + (*self.perm.get(kk + k2) as uint)) as uint)) as uint;
-    let gi3: uint = *self.permMod12.get(ii + 1 + (*self.perm.get(jj + 1) + *self.perm.get(kk + 1)) as uint) as uint;
+    let gi0: uint = permMod12[ii + (perm[jj + (perm[kk] as uint)] as uint)] as uint;
+    let gi1: uint = permMod12[ii + i1 + (perm[jj + j1 + (perm[kk + k1] as uint)] as uint)] as uint;
+    let gi2: uint = permMod12[ii + i2 + (perm[jj + j2 + (perm[kk + k2] as uint)] as uint)] as uint;
+    let gi3: uint = permMod12[ii + 1 + (perm[jj + 1 + (perm[kk + 1] as uint)] as uint)] as uint;
 
     // Calculate the contribution from the four corners
     let mut t0: f64 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
