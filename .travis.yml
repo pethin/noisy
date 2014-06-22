@@ -14,5 +14,6 @@ script:
   - make test
   - make bench
   - make doc
+  - make examples
 after_script:
   - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh
