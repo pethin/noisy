@@ -65,7 +65,6 @@ make examples
 #![feature(macro_rules)]
 
 extern crate rand;
-extern crate nalgebra;
 
 #[cfg(test)]
 extern crate test;

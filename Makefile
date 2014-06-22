@@ -15,9 +15,6 @@ LIB_DIR             = lib
 
 all: lib
 
-deps:
-	$(MAKE) -C $(DEPS_DIR)/nalgebra
-
 lib:
 	mkdir -p $(LIB_DIR)
 	$(RUSTC) $(LIB_FILE) -L $(DEPS_DIR)/nalgebra/lib --out-dir=$(LIB_DIR) --opt-level 3
@@ -51,7 +48,6 @@ clean:
 
 .PHONY: \
 	all \
-	deps \
 	lib \
 	test \
 	bench \
