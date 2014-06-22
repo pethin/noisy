@@ -1,8 +1,7 @@
 use std::rand::{weak_rng, Rng, XorShiftRng};
 use test::Bencher;
 
-use NoiseGen;
-use gen::Simplex;
+use gen::{NoiseGen, Simplex};
 
 #[bench]
 fn bench_simplex_new(b: &mut Bencher) {

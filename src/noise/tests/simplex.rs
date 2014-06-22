@@ -1,8 +1,7 @@
 use std::rand::{task_rng, random};
 use std::rand::{Rng, OsRng, StdRng, TaskRng, IsaacRng, Isaac64Rng, XorShiftRng};
 
-use NoiseGen;
-use gen::Simplex;
+use gen::{NoiseGen, Simplex};
 
 macro_rules! test_simplex_from_rng(
   ($t: ident) => ({

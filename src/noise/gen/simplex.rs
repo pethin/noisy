@@ -81,8 +81,7 @@ impl NoiseGen for Simplex {
   /// # Example
   ///
   /// ```rust
-  /// use noise::NoiseGen;
-  /// use noise::gen::Simplex;
+  /// use noise::gen::{NoiseGen, Simplex};
   ///
   /// let simplex = Simplex::new();
   /// let val = simplex.noise1d(123.0 * 0.02);
@@ -124,8 +123,7 @@ impl NoiseGen for Simplex {
   /// # Example
   ///
   /// ```rust
-  /// use noise::NoiseGen;
-  /// use noise::gen::Simplex;
+  /// use noise::gen::{NoiseGen, Simplex};
   ///
   /// let simplex = Simplex::new();
   /// let val = simplex.noise2d(
@@ -222,8 +220,7 @@ impl NoiseGen for Simplex {
   /// # Example
   ///
   /// ```rust
-  /// use noise::NoiseGen;
-  /// use noise::gen::Simplex;
+  /// use noise::gen::{NoiseGen, Simplex};
   ///
   /// let simplex = Simplex::new();
   /// let val = simplex.noise3d(

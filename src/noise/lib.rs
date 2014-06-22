@@ -16,8 +16,7 @@ The preferred way to use **noise** is to import generators explicitly:
 
 ```rust
 extern crate noise;
-use noise::NoiseGen;
-use noise::gen::Simplex;
+use noise::gen::{NoiseGen, Simplex};
 
 fn main() {
     let simplex = Simplex::new();
