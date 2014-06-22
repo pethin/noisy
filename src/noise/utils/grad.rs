@@ -1,3 +1,5 @@
+//! Helper functions to compute gradients-dot-residualvectors (1D to 4D).
+
 use utils::if_else;
 
 /// Compute 1D gradient-dot-residualvector.

@@ -8,7 +8,8 @@
 
 use std::rand::{Rng, XorShiftRng, weak_rng};
 
-use utils::{fastfloor, grad1, grad2, grad3};
+use utils::fastfloor;
+use utils::grad::{grad1, grad2, grad3};
 use gen::NoiseGen;
 
 static F2: f64 = 0.366025403784_f64;
