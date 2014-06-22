@@ -31,6 +31,7 @@ includes a variety of generators including:
 
 * Simplex noise.
 * Perlin noise.
+* Checkerboard.
 
 ## Compilation
 You will need the last rust compiler from the master branch.

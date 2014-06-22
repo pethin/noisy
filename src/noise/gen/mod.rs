@@ -2,9 +2,11 @@
 
 pub use gen::simplex::Simplex;
 pub use gen::perlin::Perlin;
+pub use gen::checkerboard::Checkerboard;
 
 mod simplex;
 mod perlin;
+mod checkerboard;
 
 /// A procedural noise generator.
 pub trait NoiseGen {
