@@ -75,6 +75,14 @@ fn test_simplex_from_taskrng() {
 }
 
 #[test]
+fn test_simplex_noise1d() {
+  let simplex = Simplex::new();
+  for _ in range(0, 10000) {
+    simplex.noise1d(random());
+  }
+}
+
+#[test]
 fn test_simplex_noise2d() {
   let simplex = Simplex::new();
   for _ in range(0, 10000) {

@@ -23,6 +23,16 @@ fn if_true_else(cond: bool, if_true: f64, if_false: f64) -> f64 {
   }
 }
 
+fn grad(hash: uint, x: f64) -> f64 {
+  let h: uint = hash & 15;
+  let mut grad: f64 = 1.0 + (h & 7) as f64; // Gradient value 1.0, 2.0, ..., 8.0
+  if (h & 8) != 0 {
+    grad = -grad; // Set a random sign for the gradient
+  }
+
+  grad * x // Multiply the gradient with the distance
+}
+
 fn grad2(hash: uint, x: f64, y: f64) -> f64 {
   // Convert low 3 bits of hash code into 8 simple gradient directions,
   // and compute the dot product with (x,y).
@@ -104,6 +114,49 @@ impl Simplex {
 }
 
 impl NoiseGen for Simplex {
+  /// Given an x coordinate, return a value in the interval [-1, 1].
+  ///
+  /// # Example
+  ///
+  /// ```rust
+  /// use noise::NoiseGen;
+  /// use noise::gen::Simplex;
+  ///
+  /// let simplex = Simplex::new();
+  /// let val = simplex.noise1d(123.0 * 0.02);
+  /// ```
+  #[allow(uppercase_variables)]
+  fn noise1d(&self, xin: f64) -> f64 {
+    // View the permutation table as a slice
+    let perm = self.perm.as_slice();
+
+    // Noise contributions
+    let mut n0: f64;
+    let mut n1: f64;
+
+    let i0: int = xin.floor() as int;
+    let i1: int = i0 + 1;
+    let x0: f64 = xin - i0 as f64;
+    let x1: f64 = x0 - 1.0;
+
+    // Work out the hashed gradient indices
+    let gi0: uint = perm[(i0 & 255) as uint] as uint;
+    let gi1: uint = perm[(i1 & 255) as uint] as uint;
+
+    // Calculate the contributions
+    let mut t0: f64 = 1.0 - x0 * x0;
+    t0 *= t0;
+    n0 = t0 * t0 * grad(gi0, x0);
+
+    let mut t1: f64 = 1.0 - x1 * x1;
+    t1 *= t1;
+    n1 = t1 * t1 * grad(gi1, x1);
+
+    // The maximum value of this noise is 8*(3/4)^4 = 2.53125.
+    // A factor of 0.395 scales to fit exactly within [-1,1].
+    0.395 * (n0 + n1)
+  }
+
   /// Given a (x, y) coordinate, return a value in the interval [-1, 1].
   ///
   /// # Example
