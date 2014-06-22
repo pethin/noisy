@@ -1,8 +1,10 @@
 //! Procedural noise generators.
 
 pub use gen::simplex::Simplex;
+pub use gen::improved_perlin::ImprovedPerlin;
 
 mod simplex;
+mod improved_perlin;
 
 /// A procedural noise generator.
 pub trait NoiseGen {

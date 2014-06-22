@@ -72,11 +72,7 @@ pub mod utils;
 pub mod gen;
 
 #[cfg(test)]
-mod tests {
-  mod simplex;
-}
+mod tests;
 
 #[cfg(test)]
-mod bench {
-  mod simplex;
-}
+mod bench;
