@@ -31,7 +31,7 @@ fn if_true_else(cond: bool, if_true: f64, if_false: f64) -> f64 {
   }
 }
 
-fn grad(hash: uint, x: f64) -> f64 {
+fn grad1(hash: uint, x: f64) -> f64 {
   let h: uint = hash & 15;
   let mut grad: f64 = 1.0 + (h & 7) as f64; // Gradient value 1.0, 2.0, ..., 8.0
   if (h & 8) != 0 {
@@ -154,11 +154,11 @@ impl NoiseGen for Simplex {
     // Calculate the contributions
     let mut t0: f64 = 1.0 - x0 * x0;
     t0 *= t0;
-    n0 = t0 * t0 * grad(gi0, x0);
+    n0 = t0 * t0 * grad1(gi0, x0);
 
     let mut t1: f64 = 1.0 - x1 * x1;
     t1 *= t1;
-    n1 = t1 * t1 * grad(gi1, x1);
+    n1 = t1 * t1 * grad1(gi1, x1);
 
     // The maximum value of this noise is 8*(3/4)^4 = 2.53125.
     // A factor of 0.395 scales to fit exactly within [-1,1].
