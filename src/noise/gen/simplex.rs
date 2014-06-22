@@ -9,7 +9,7 @@
 use std::rand::{Rng, XorShiftRng, weak_rng};
 
 use utils::{fastfloor, grad1, grad2, grad3};
-use NoiseGen;
+use gen::NoiseGen;
 
 static F2: f64 = 0.366025403784_f64;
 static G2: f64 = 0.211324865405_f64;
