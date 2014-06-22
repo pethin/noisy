@@ -1,7 +1,6 @@
 extern crate noise;
 
-use noise::NoiseGen;
-use noise::gen::Simplex;
+use noise::gen::{NoiseGen, Simplex};
 
 // Width of the output in columns.
 static WIDTH: uint = 80;

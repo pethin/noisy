@@ -2,8 +2,7 @@ extern crate noise;
 
 use std::rand::{XorShiftRng, SeedableRng};
 
-use noise::NoiseGen;
-use noise::gen::Simplex;
+use noise::gen::{NoiseGen, Simplex};
 
 // Seed used to create a random number generator.
 static SEED: [u32, ..4] = [9123678, 7890124, 6123462, 2789431];
