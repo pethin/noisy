@@ -7,31 +7,46 @@
 //! Better rank ordering method by Stefan Gustavson in 2012.
 
 use std::rand::{Rng, XorShiftRng, weak_rng};
-use nalgebra::na::{Vec3, dot};
 
 use NoiseGen;
-
-macro_rules! vec3(
-  ($x: expr, $y: expr, $z: expr) => (
-      Vec3 {x: $x, y: $y, z: $z}
-  );
-)
-
-static GRAD3: [Vec3<f64>, ..12] = [
-  vec3!( 1.0, 1.0, 0.0), vec3!(-1.0, 1.0, 0.0), vec3!(1.0,-1.0, 0.0), vec3!(-1.0,-1.0, 0.0),
-  vec3!( 1.0, 0.0, 1.0), vec3!(-1.0, 0.0, 1.0), vec3!(1.0, 0.0,-1.0), vec3!(-1.0, 0.0,-1.0),
-  vec3!( 0.0, 1.0, 1.0), vec3!( 0.0,-1.0, 1.0), vec3!(0.0, 1.0,-1.0), vec3!( 0.0,-1.0,-1.0)
-];
 
 static F2: f64 = 0.366025403784_f64;
 static G2: f64 = 0.211324865405_f64;
 static F3: f64 = 0.333333333333_f64;
 static G3: f64 = 0.166666666667_f64;
 
+fn if_true_else(cond: bool, if_true: f64, if_false: f64) -> f64 {
+  if cond {
+    if_true
+  } else {
+    if_false
+  }
+}
+
+fn grad2(hash: uint, x: f64, y: f64) -> f64 {
+  // Convert low 3 bits of hash code into 8 simple gradient directions,
+  // and compute the dot product with (x,y).
+  let h: uint = hash & 7;
+  let u: f64 = if_true_else(h < 4, x, y);
+  let v: f64 = if_true_else(h < 4, y, x);
+
+  if_true_else(h&1 != 0, -u, u) + if_true_else(h&2 != 0, -2.0*v, 2.0*v)
+}
+
+fn grad3(hash: uint, x: f64, y: f64, z: f64) -> f64 {
+  // Convert low 4 bits of hash code into 12 simple gradient directions,
+  // and compute dot product.
+  let h: uint = hash & 15;
+  let u: f64 = if_true_else(h < 8, x, y);
+  // Fix repeats at h = 12 to 15
+  let v: f64 = if_true_else(h < 4, y, if_true_else(h == 12 || h == 14, x, z));
+
+  if_true_else(h&1 != 0, -u, u) + if_true_else(h&2 != 0, -v, v)
+}
+
 /// A simplex noise generator.
 pub struct Simplex {
-  perm: Vec<u8>,
-  permMod12: Vec<u8>
+  perm: Vec<u8>
 }
 
 impl Simplex {
@@ -49,11 +64,9 @@ impl Simplex {
 
     let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
     let perm: Vec<u8> = Vec::from_fn(512, |idx| *p.get(idx & 255));
-    let permMod12: Vec<u8> = Vec::from_fn(512, |idx| *perm.get(idx) % 12);
 
     Simplex {
-      perm: perm,
-      permMod12: permMod12
+      perm: perm
     }
   }
 
@@ -83,11 +96,9 @@ impl Simplex {
   pub fn from_rng<R: Rng>(rng: &mut R) -> Simplex {
     let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
     let perm: Vec<u8> = Vec::from_fn(512, |idx| *p.get(idx & 255));
-    let permMod12: Vec<u8> = Vec::from_fn(512, |idx| *perm.get(idx) % 12);
 
     Simplex {
-      perm: perm,
-      permMod12: permMod12
+      perm: perm
     }
   }
 }
@@ -111,7 +122,6 @@ impl NoiseGen for Simplex {
   fn noise2d(&self, xin: f64, yin: f64) -> f64 {
     // View the Vecs as slices
     let perm = self.perm.as_slice();
-    let permMod12 = self.permMod12.as_slice();
 
     // Noise contributions from the three corners
     let mut n0: f64;
@@ -158,9 +168,9 @@ impl NoiseGen for Simplex {
     let ii: uint = (i & 255) as uint;
     let jj: uint = (j & 255) as uint;
     // Work out the hashed gradient indices of the three simplex corners
-    let gi0: uint = permMod12[ii + perm[jj] as uint] as uint;
-    let gi1: uint = permMod12[ii + i1 + (perm[jj + j1] as uint)] as uint;
-    let gi2: uint = permMod12[ii + 1 + (perm[jj + 1] as uint)] as uint;
+    let gi0: uint = perm[ii + perm[jj] as uint] as uint;
+    let gi1: uint = perm[ii + i1 + (perm[jj + j1] as uint)] as uint;
+    let gi2: uint = perm[ii + 1 + (perm[jj + 1] as uint)] as uint;
 
     // Calculate the contribution from the three corners
     let mut t0: f64 = 0.5 - x0 * x0 - y0 * y0;
@@ -168,7 +178,7 @@ impl NoiseGen for Simplex {
       n0 = 0.0;
     } else {
       t0 *= t0;
-      n0 = t0 * t0 * dot(&GRAD3[gi0], &Vec3::new(x0, y0, 0.0));
+      n0 = t0 * t0 * grad2(gi0, x0, y0);
     }
 
     let mut t1: f64 = 0.5 - x1 * x1 - y1 * y1;
@@ -176,7 +186,7 @@ impl NoiseGen for Simplex {
       n1 = 0.0;
     } else {
       t1 *= t1;
-      n1 = t1 * t1 * dot(&GRAD3[gi1], &Vec3::new(x1, y1, 0.0));
+      n1 = t1 * t1 * grad2(gi1, x1, y1);
     }
 
     let mut t2: f64 = 0.5 - x2 * x2 - y2 * y2;
@@ -184,12 +194,12 @@ impl NoiseGen for Simplex {
       n2 = 0.0;
     } else {
       t2 *= t2;
-      n2 = t2 * t2 * dot(&GRAD3[gi2], &Vec3::new(x2, y2, 0.0));
+      n2 = t2 * t2 * grad2(gi2, x2, y2);
     }
 
     // Add contributions from each corner to get the final noise value.
     // The result is scaled to return values in the interval [-1, 1].
-    70.0 * (n0 + n1 + n2)
+    40.0 * (n0 + n1 + n2)
   }
 
   /// Given a (x, y, z) coordinate, return a value in the interval [-1, 1].
@@ -211,7 +221,6 @@ impl NoiseGen for Simplex {
   fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
     // View the Vecs as slices
     let perm = self.perm.as_slice();
-    let permMod12 = self.permMod12.as_slice();
 
     // Noise contributions from the four corners
     let mut n0: f64;
@@ -314,10 +323,10 @@ impl NoiseGen for Simplex {
     let jj: uint = (j & 255) as uint;
     let kk: uint = (k & 255) as uint;
     // Work out the hashed gradient indices of the four simplex corners
-    let gi0: uint = permMod12[ii + (perm[jj + (perm[kk] as uint)] as uint)] as uint;
-    let gi1: uint = permMod12[ii + i1 + (perm[jj + j1 + (perm[kk + k1] as uint)] as uint)] as uint;
-    let gi2: uint = permMod12[ii + i2 + (perm[jj + j2 + (perm[kk + k2] as uint)] as uint)] as uint;
-    let gi3: uint = permMod12[ii + 1 + (perm[jj + 1 + (perm[kk + 1] as uint)] as uint)] as uint;
+    let gi0: uint = perm[ii + (perm[jj + (perm[kk] as uint)] as uint)] as uint;
+    let gi1: uint = perm[ii + i1 + (perm[jj + j1 + (perm[kk + k1] as uint)] as uint)] as uint;
+    let gi2: uint = perm[ii + i2 + (perm[jj + j2 + (perm[kk + k2] as uint)] as uint)] as uint;
+    let gi3: uint = perm[ii + 1 + (perm[jj + 1 + (perm[kk + 1] as uint)] as uint)] as uint;
 
     // Calculate the contribution from the four corners
     let mut t0: f64 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
@@ -325,7 +334,7 @@ impl NoiseGen for Simplex {
       n0 = 0.0;
     } else {
       t0 *= t0;
-      n0 = t0 * t0 * dot(&GRAD3[gi0], &Vec3::new(x0, y0, z0));
+      n0 = t0 * t0 * grad3(gi0, x0, y0, z0);
     }
 
     let mut t1: f64 = 0.6 - x1 * x1 - y1 * y1 - z1 * z1;
@@ -333,7 +342,7 @@ impl NoiseGen for Simplex {
       n1 = 0.0;
     } else {
       t1 *= t1;
-      n1 = t1 * t1 * dot(&GRAD3[gi1], &Vec3::new(x1, y1, z1));
+      n1 = t1 * t1 * grad3(gi1, x1, y1, z1);
     }
 
     let mut t2: f64 = 0.6 - x2 * x2 - y2 * y2 - z2 * z2;
@@ -341,7 +350,7 @@ impl NoiseGen for Simplex {
       n2 = 0.0;
     } else {
       t2 *= t2;
-      n2 = t2 * t2 * dot(&GRAD3[gi2], &Vec3::new(x2, y2, z2));
+      n2 = t2 * t2 * grad3(gi2, x2, y2, z2);
     }
 
     let mut t3: f64 = 0.6 - x3 * x3 - y3 * y3 - z3 * z3;
@@ -349,7 +358,7 @@ impl NoiseGen for Simplex {
       n3 = 0.0;
     } else {
       t3 *= t3;
-      n3 = t3 * t3 * dot(&GRAD3[gi3], &Vec3::new(x3, y3, z3));
+      n3 = t3 * t3 * grad3(gi3, x3, y3, z3);
     }
 
     // Add contributions from each corner to get the final noise value.
