@@ -18,6 +18,7 @@ static F3: f64 = 0.333333333333_f64;
 static G3: f64 = 0.166666666667_f64;
 
 /// A simplex noise generator.
+#[deriving(Clone, PartialEq, Eq)]
 pub struct Simplex {
   perm: Vec<u8>
 }
@@ -377,13 +378,5 @@ impl NoiseGen for Simplex {
     // Add contributions from each corner to get the final noise value.
     // The result is scaled to return values in the interval [-1,1].
     32.0 * (n0 + n1 + n2 + n3)
-  }
-}
-
-/// Implementation of `PartialEq` to support `==` and `!=`.
-impl PartialEq for Simplex {
-  /// If the permutation tables are equal than the simplex instances are the same.
-  fn eq(&self, other: &Simplex) -> bool {
-    self.perm == other.perm
   }
 }

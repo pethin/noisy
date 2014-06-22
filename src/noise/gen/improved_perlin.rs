@@ -12,6 +12,7 @@ use utils::grad::{grad1, grad2, grad3};
 use gen::NoiseGen;
 
 /// A ImprovedPerlin noise generator.
+#[deriving(Clone, PartialEq, Eq)]
 pub struct ImprovedPerlin {
   perm: Vec<u8>
 }
@@ -233,13 +234,5 @@ impl NoiseGen for ImprovedPerlin {
 
     // The result is scaled to return values in the interval [-1, 1].
     0.936 * lerp(s, n0, n1)
-  }
-}
-
-/// Implementation of `PartialEq` to support `==` and `!=`.
-impl PartialEq for ImprovedPerlin {
-  /// If the permutation tables are equal than the ImprovedPerlin instances are the same.
-  fn eq(&self, other: &ImprovedPerlin) -> bool {
-    self.perm == other.perm
   }
 }
