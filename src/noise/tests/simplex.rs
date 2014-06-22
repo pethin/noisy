@@ -5,39 +5,30 @@ use NoiseGen;
 use gen::Simplex;
 
 macro_rules! test_simplex_from_rng(
-  ($t: ident) => (
-    for _ in range(0, 10) {
-      let mut rng = match $t::new() {
-        Ok(r) => r,
-        Err(e) => fail!("Failed to create RNG: {}", e)
-      };
+  ($t: ident) => ({
+    let mut rng = match $t::new() {
+      Ok(r) => r,
+      Err(e) => fail!("Failed to create RNG: {}", e)
+    };
 
-      Simplex::from_rng(&mut rng);
-    }
-  );
+    Simplex::from_rng(&mut rng);
+  });
 )
 
 macro_rules! test_simplex_from_rand_rng(
-  ($t: ty) => (
-    for _ in range(0, 10000) {
-      let mut rng: $t = match OsRng::new() {
-        Ok(mut r) => r.gen(),
-        Err(e) => fail!("Failed to create seeded RNG: {}", e)
-      };
+  ($t: ty) => ({
+    let mut rng: $t = match OsRng::new() {
+      Ok(mut r) => r.gen(),
+      Err(e) => fail!("Failed to create seeded RNG: {}", e)
+    };
 
-      Simplex::from_rng(&mut rng);
-    }
-  );
+    Simplex::from_rng(&mut rng);
+  });
 )
 
 #[test]
 fn test_simplex_new() {
-  for _ in range(0, 10000) {
-    let simplex1 = Simplex::new();
-    let simplex2 = Simplex::new();
-
-    assert!(simplex1 != simplex2);
-  }
+  Simplex::new();
 }
 
 #[test]
@@ -67,11 +58,9 @@ fn test_simplex_from_xorshiftrng() {
 
 #[test]
 fn test_simplex_from_taskrng() {
-  for _ in range(0, 10) {
-    let mut taskRng: TaskRng = task_rng();
+  let mut taskRng: TaskRng = task_rng();
 
-    Simplex::from_rng(&mut taskRng);
-  }
+  Simplex::from_rng(&mut taskRng);
 }
 
 #[test]
