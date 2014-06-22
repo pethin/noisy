@@ -69,6 +69,8 @@ extern crate rand;
 #[cfg(test)]
 extern crate test;
 
+pub mod utils;
+
 /// Procedural noise generators.
 pub mod gen {
   pub use self::simplex::Simplex;

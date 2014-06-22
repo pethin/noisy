@@ -8,61 +8,13 @@
 
 use std::rand::{Rng, XorShiftRng, weak_rng};
 
+use utils::{fastfloor, grad1, grad2, grad3};
 use NoiseGen;
 
 static F2: f64 = 0.366025403784_f64;
 static G2: f64 = 0.211324865405_f64;
 static F3: f64 = 0.333333333333_f64;
 static G3: f64 = 0.166666666667_f64;
-
-#[inline(always)]
-fn fastfloor(x: f64) -> int {
-  if x > 0.0 {
-    x as int
-  } else {
-    (x as int) - 1
-  }
-}
-
-#[inline(always)]
-fn if_true_else(cond: bool, if_true: f64, if_false: f64) -> f64 {
-  if cond {
-    if_true
-  } else {
-    if_false
-  }
-}
-
-fn grad1(hash: uint, x: f64) -> f64 {
-  let h: uint = hash & 15;
-  let mut grad: f64 = 1.0 + (h & 7) as f64; // Gradient value 1.0, 2.0, ..., 8.0
-  if (h & 8) != 0 {
-    grad = -grad; // Set a random sign for the gradient
-  }
-
-  grad * x // Multiply the gradient with the distance
-}
-
-fn grad2(hash: uint, x: f64, y: f64) -> f64 {
-  // Convert low 3 bits of hash code into 8 simple gradient directions,
-  // and compute the dot product with (x,y).
-  let h: uint = hash & 7;
-  let u: f64 = if_true_else(h < 4, x, y);
-  let v: f64 = if_true_else(h < 4, y, x);
-
-  if_true_else(h&1 != 0, -u, u) + if_true_else(h&2 != 0, -2.0*v, 2.0*v)
-}
-
-fn grad3(hash: uint, x: f64, y: f64, z: f64) -> f64 {
-  // Convert low 4 bits of hash code into 12 simple gradient directions,
-  // and compute dot product.
-  let h: uint = hash & 15;
-  let u: f64 = if_true_else(h < 8, x, y);
-  // Fix repeats at h = 12 to 15
-  let v: f64 = if_true_else(h < 4, y, if_true_else(h == 12 || h == 14, x, z));
-
-  if_true_else(h&1 != 0, -u, u) + if_true_else(h&2 != 0, -v, v)
-}
 
 /// A simplex noise generator.
 pub struct Simplex {
