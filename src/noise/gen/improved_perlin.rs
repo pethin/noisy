@@ -81,7 +81,6 @@ impl NoiseGen for ImprovedPerlin {
   /// let improved_perlin = ImprovedPerlin::new();
   /// let val = improved_perlin.noise1d(123.0 * 0.04);
   /// ```
-  #[allow(uppercase_variables)]
   fn noise1d(&self, xin: f64) -> f64 {
     // View the permutation table as a slice
     let perm = self.perm.as_slice();
@@ -110,7 +109,7 @@ impl NoiseGen for ImprovedPerlin {
     0.188 * lerp(s, nx0, nx1)
   }
 
-  /// Given a (x, y, z) coordinate, return a value in the interval [-1, 1].
+  /// Given a (x, y) coordinate, return a value in the interval [-1, 1].
   ///
   /// # Example
   ///
@@ -118,10 +117,9 @@ impl NoiseGen for ImprovedPerlin {
   /// use noise::gen::{NoiseGen, ImprovedPerlin};
   ///
   /// let improved_perlin = ImprovedPerlin::new();
-  /// let val = improved_perlin.noise3d(
+  /// let val = improved_perlin.noise2d(
   ///   123.0 * 0.04,
-  ///   231.0 * 0.04,
-  ///   321.0 * 0.04
+  ///   132.0 * 0.04
   /// );
   /// ```
   fn noise2d(&self, xin: f64, yin: f64) -> f64 {
@@ -164,6 +162,20 @@ impl NoiseGen for ImprovedPerlin {
     0.507 * lerp(s, n0, n1)
   }
 
+  /// Given a (x, y, z) coordinate, return a value in the interval [-1, 1].
+  ///
+  /// # Example
+  ///
+  /// ```rust
+  /// use noise::gen::{NoiseGen, ImprovedPerlin};
+  ///
+  /// let improved_perlin = ImprovedPerlin::new();
+  /// let val = improved_perlin.noise3d(
+  ///   123.0 * 0.04,
+  ///   231.0 * 0.04,
+  ///   321.0 * 0.04
+  /// );
+  /// ```
   fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
     // View the permutation table as a slice
     let perm = self.perm.as_slice();
