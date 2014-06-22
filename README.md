@@ -30,8 +30,7 @@ fn main() {
 includes a variety of generators including:
 
 * Simplex noise.
-* Imporoved Perlin noise (not implemented).
-* Perlin noise (not implemented).
+* Perlin noise.
 
 ## Compilation
 You will need the last rust compiler from the master branch.

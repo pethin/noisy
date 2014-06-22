@@ -11,43 +11,43 @@ use utils::{fade, fastfloor, lerp};
 use utils::grad::{grad1, grad2, grad3};
 use gen::NoiseGen;
 
-/// A ImprovedPerlin noise generator.
+/// A Perlin noise generator.
 #[deriving(Clone, PartialEq, Eq)]
-pub struct ImprovedPerlin {
+pub struct Perlin {
   perm: Vec<u8>
 }
 
-impl ImprovedPerlin {
-  /// Initializes a new ImprovedPerlin instance with a random seed using XorShiftRng.
+impl Perlin {
+  /// Initializes a new Perlin instance with a random seed using XorShiftRng.
   ///
   /// # Example
   ///
   /// ```rust
-  /// use noise::gen::ImprovedPerlin;
+  /// use noise::gen::Perlin;
   ///
-  /// let improved_perlin = ImprovedPerlin::new();
+  /// let perlin = Perlin::new();
   /// ```
-  pub fn new() -> ImprovedPerlin {
+  pub fn new() -> Perlin {
     let mut rng: XorShiftRng = weak_rng();
 
     let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
     let perm: Vec<u8> = Vec::from_fn(512, |idx| *p.get(idx & 255));
 
-    ImprovedPerlin {
+    Perlin {
       perm: perm
     }
   }
 
-  /// Initializes a new ImprovedPerlin instance with a random number generator.
+  /// Initializes a new Perlin instance with a random number generator.
   ///
   /// # Example
   ///
   /// ```rust
   /// # use std::rand::StdRng;
-  /// use noise::gen::ImprovedPerlin;
+  /// use noise::gen::Perlin;
   ///
   /// let mut rng: StdRng = StdRng::new().unwrap();
-  /// let improved_perlin = ImprovedPerlin::from_rng(&mut rng);
+  /// let perlin = Perlin::from_rng(&mut rng);
   /// ```
   ///
   /// This also allows you to initialize the instance with a seed:
@@ -56,31 +56,31 @@ impl ImprovedPerlin {
   ///
   /// ```rust
   /// # use std::rand::{StdRng, SeedableRng};
-  /// use noise::gen::ImprovedPerlin;
+  /// use noise::gen::Perlin;
   ///
   /// let mut rng: StdRng = SeedableRng::from_seed(&[1337]);
-  /// let improved_perlin = ImprovedPerlin::from_rng(&mut rng);
+  /// let perlin = Perlin::from_rng(&mut rng);
   /// ```
-  pub fn from_rng<R: Rng>(rng: &mut R) -> ImprovedPerlin {
+  pub fn from_rng<R: Rng>(rng: &mut R) -> Perlin {
     let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
     let perm: Vec<u8> = Vec::from_fn(512, |idx| *p.get(idx & 255));
 
-    ImprovedPerlin {
+    Perlin {
       perm: perm
     }
   }
 }
 
-impl NoiseGen for ImprovedPerlin {
+impl NoiseGen for Perlin {
   /// Given an x coordinate, return a value in the interval [-1, 1].
   ///
   /// # Example
   ///
   /// ```rust
-  /// use noise::gen::{NoiseGen, ImprovedPerlin};
+  /// use noise::gen::{NoiseGen, Perlin};
   ///
-  /// let improved_perlin = ImprovedPerlin::new();
-  /// let val = improved_perlin.noise1d(123.0 * 0.04);
+  /// let perlin = Perlin::new();
+  /// let val = perlin.noise1d(123.0 * 0.04);
   /// ```
   fn noise1d(&self, xin: f64) -> f64 {
     // View the permutation table as a slice
@@ -115,10 +115,10 @@ impl NoiseGen for ImprovedPerlin {
   /// # Example
   ///
   /// ```rust
-  /// use noise::gen::{NoiseGen, ImprovedPerlin};
+  /// use noise::gen::{NoiseGen, Perlin};
   ///
-  /// let improved_perlin = ImprovedPerlin::new();
-  /// let val = improved_perlin.noise2d(
+  /// let perlin = Perlin::new();
+  /// let val = perlin.noise2d(
   ///   123.0 * 0.04,
   ///   132.0 * 0.04
   /// );
@@ -168,10 +168,10 @@ impl NoiseGen for ImprovedPerlin {
   /// # Example
   ///
   /// ```rust
-  /// use noise::gen::{NoiseGen, ImprovedPerlin};
+  /// use noise::gen::{NoiseGen, Perlin};
   ///
-  /// let improved_perlin = ImprovedPerlin::new();
-  /// let val = improved_perlin.noise3d(
+  /// let perlin = Perlin::new();
+  /// let val = perlin.noise3d(
   ///   123.0 * 0.04,
   ///   231.0 * 0.04,
   ///   321.0 * 0.04
