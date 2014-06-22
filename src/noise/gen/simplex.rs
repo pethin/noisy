@@ -15,6 +15,7 @@ static G2: f64 = 0.211324865405_f64;
 static F3: f64 = 0.333333333333_f64;
 static G3: f64 = 0.166666666667_f64;
 
+#[inline(always)]
 fn fastfloor(x: f64) -> int {
   if x > 0.0 {
     x as int
@@ -23,6 +24,7 @@ fn fastfloor(x: f64) -> int {
   }
 }
 
+#[inline(always)]
 fn if_true_else(cond: bool, if_true: f64, if_false: f64) -> f64 {
   if cond {
     if_true
