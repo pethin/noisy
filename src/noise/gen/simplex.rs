@@ -15,6 +15,14 @@ static G2: f64 = 0.211324865405_f64;
 static F3: f64 = 0.333333333333_f64;
 static G3: f64 = 0.166666666667_f64;
 
+fn fastfloor(x: f64) -> int {
+  if x > 0.0 {
+    x as int
+  } else {
+    (x as int) - 1
+  }
+}
+
 fn if_true_else(cond: bool, if_true: f64, if_false: f64) -> f64 {
   if cond {
     if_true
@@ -134,7 +142,7 @@ impl NoiseGen for Simplex {
     let mut n0: f64;
     let mut n1: f64;
 
-    let i0: int = xin.floor() as int;
+    let i0: int = fastfloor(xin);
     let i1: int = i0 + 1;
     let x0: f64 = xin - i0 as f64;
     let x1: f64 = x0 - 1.0;
@@ -183,8 +191,8 @@ impl NoiseGen for Simplex {
 
     // Skew the input space to determine which simplex cell we're in
     let s: f64 = (xin + yin) * F2; // Hairy factor for 2D
-    let i: int = (xin + s).floor() as int;
-    let j: int = (yin + s).floor() as int;
+    let i: int = fastfloor(xin + s);
+    let j: int = fastfloor(yin + s);
     let t: f64 = ((i + j) as f64) * G2;
 
     // Unskew the cell origin back to (x, y) space
@@ -283,9 +291,9 @@ impl NoiseGen for Simplex {
 
     // Skew the input space to determine which simplex cell we're in
     let s: f64 = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
-    let i: int = (xin + s).floor() as int;
-    let j: int = (yin + s).floor() as int;
-    let k: int = (zin + s).floor() as int;
+    let i: int = fastfloor(xin + s);
+    let j: int = fastfloor(yin + s);
+    let k: int = fastfloor(zin + s);
     let t: f64 = ((i + j + k) as f64) * G3;
 
     // Unskew the cell origin back to (x, y, z) space
