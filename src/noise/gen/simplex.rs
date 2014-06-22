@@ -173,7 +173,7 @@ impl NoiseGen for Simplex {
   /// ```
   #[allow(uppercase_variables)]
   fn noise2d(&self, xin: f64, yin: f64) -> f64 {
-    // View the Vecs as slices
+    // View the permutation table as a slice
     let perm = self.perm.as_slice();
 
     // Noise contributions from the three corners
@@ -272,7 +272,7 @@ impl NoiseGen for Simplex {
   /// ```
   #[allow(uppercase_variables)]
   fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
-    // View the Vecs as slices
+    // View the permutation table as a slice
     let perm = self.perm.as_slice();
 
     // Noise contributions from the four corners
