@@ -10,7 +10,7 @@ fn test_checkerboard_new() {
 #[test]
 fn test_checkerboard_noise1d() {
   let checkerboard = Checkerboard::new();
-  for _ in range(0, 10000) {
+  for _ in range(0u, 10000) {
     checkerboard.noise1d(random());
   }
 }
@@ -18,7 +18,7 @@ fn test_checkerboard_noise1d() {
 #[test]
 fn test_checkerboard_noise2d() {
   let checkerboard = Checkerboard::new();
-  for _ in range(0, 10000) {
+  for _ in range(0u, 10000) {
     checkerboard.noise2d(
       random(),
       random()
@@ -29,7 +29,7 @@ fn test_checkerboard_noise2d() {
 #[test]
 fn test_checkerboard_noise3d() {
   let checkerboard = Checkerboard::new();
-  for _ in range(0, 10000) {
+  for _ in range(0u, 10000) {
     checkerboard.noise3d(
       random(),
       random(),
