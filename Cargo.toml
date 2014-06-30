@@ -1,0 +1,12 @@
+[package]
+
+name = "noise"
+version = "0.1.0"
+readme = "README.md"
+authors = ["Peter Nguyen <peter.hieu.nguyen@gmail.com>"]
+tags = ["noise", "perlin", "simplex"]
+
+[[lib]]
+
+name = "noise"
+path = "src/lib.rs"

@@ -1,6 +1,6 @@
 env:
   global:
-    - secure: IPKNp3R8XAkOoBUqlxnrMXTjTm7EO5muiu1oZrpPKEib5dKw/B1+ZhO2qLdNYydI8W3zxfTMrVzg3vpyaHBsKyNDuhQXfe9nxYBbH3rm5q3U/m8KN985nv/2Mh2oHDaK0Sn0vFcc6uqN7uSNaNksfnK+bfX4L84KIbI5DOWQzRs=
+    - secure: bLxCH204PzY/OHPkdxlqKeVXZwps4SBUfviF7ZEwxcOnIz1IvxH5X4/V/C/L+ye1qeyErmfbUFlIPcD4134dzCYCRcq4cWupcQqGPe754ylfgjV+JYyk8Pywu4Cs/86Sh13sL7ZnWix0OCdaZ9Z8YXT9QSsTgz1HzYb4T5ZYZ2U=
 language: c
 install:
   - curl -O http://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.gz
@@ -8,11 +8,9 @@ install:
   - (cd rust-nightly-x86_64-unknown-linux-gnu/ && sudo ./install.sh)
 script:
   - rustc --version
-  - git submodule init
-  - git submodule update
-  - make
-  - make test
-  - make bench
+  - make lib
+  - make test-internal
+  - make bench-internal
   - make doc
   - make examples
 after_script:

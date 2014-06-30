@@ -58,7 +58,7 @@ make examples
 ```
 */
 
-#![crate_id = "noise#0.1"]
+#![crate_id = "noise#0.1.0"]
 #![crate_type = "lib"]
 #![warn(missing_doc)]
 #![feature(macro_rules)]
