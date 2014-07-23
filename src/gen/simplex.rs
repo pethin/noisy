@@ -37,7 +37,7 @@ impl Simplex {
     let mut rng: XorShiftRng = weak_rng();
 
     let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
-    let perm: Vec<u8> = Vec::from_fn(512, |idx| *p.get(idx & 255));
+    let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
 
     Simplex {
       perm: perm
@@ -69,7 +69,7 @@ impl Simplex {
   /// ```
   pub fn from_rng<R: Rng>(rng: &mut R) -> Simplex {
     let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
-    let perm: Vec<u8> = Vec::from_fn(512, |idx| *p.get(idx & 255));
+    let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
 
     Simplex {
       perm: perm
@@ -90,9 +90,6 @@ impl NoiseGen for Simplex {
   /// ```
   #[allow(uppercase_variables)]
   fn noise1d(&self, xin: f64) -> f64 {
-    // View the permutation table as a slice
-    let perm = self.perm.as_slice();
-
     // Noise contributions
     let mut n0: f64;
     let mut n1: f64;
@@ -103,8 +100,8 @@ impl NoiseGen for Simplex {
     let x1: f64 = x0 - 1.0;
 
     // Work out the hashed gradient indices
-    let gi0: uint = perm[(i0 & 255) as uint] as uint;
-    let gi1: uint = perm[(i1 & 255) as uint] as uint;
+    let gi0: uint = self.perm[(i0 & 255) as uint] as uint;
+    let gi1: uint = self.perm[(i1 & 255) as uint] as uint;
 
     // Calculate the contributions
     let mut t0: f64 = 1.0 - x0 * x0;
@@ -135,9 +132,6 @@ impl NoiseGen for Simplex {
   /// ```
   #[allow(uppercase_variables)]
   fn noise2d(&self, xin: f64, yin: f64) -> f64 {
-    // View the permutation table as a slice
-    let perm = self.perm.as_slice();
-
     // Noise contributions from the three corners
     let mut n0: f64;
     let mut n1: f64;
@@ -183,9 +177,9 @@ impl NoiseGen for Simplex {
     let ii: uint = (i & 255) as uint;
     let jj: uint = (j & 255) as uint;
     // Work out the hashed gradient indices of the three simplex corners
-    let gi0: uint = perm[ii + perm[jj] as uint] as uint;
-    let gi1: uint = perm[ii + i1 + (perm[jj + j1] as uint)] as uint;
-    let gi2: uint = perm[ii + 1 + (perm[jj + 1] as uint)] as uint;
+    let gi0: uint = self.perm[ii + self.perm[jj] as uint] as uint;
+    let gi1: uint = self.perm[ii + i1 + (self.perm[jj + j1] as uint)] as uint;
+    let gi2: uint = self.perm[ii + 1 + (self.perm[jj + 1] as uint)] as uint;
 
     // Calculate the contribution from the three corners
     let mut t0: f64 = 0.5 - x0 * x0 - y0 * y0;
@@ -233,9 +227,6 @@ impl NoiseGen for Simplex {
   /// ```
   #[allow(uppercase_variables)]
   fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
-    // View the permutation table as a slice
-    let perm = self.perm.as_slice();
-
     // Noise contributions from the four corners
     let mut n0: f64;
     let mut n1: f64;
@@ -337,10 +328,10 @@ impl NoiseGen for Simplex {
     let jj: uint = (j & 255) as uint;
     let kk: uint = (k & 255) as uint;
     // Work out the hashed gradient indices of the four simplex corners
-    let gi0: uint = perm[ii + (perm[jj + (perm[kk] as uint)] as uint)] as uint;
-    let gi1: uint = perm[ii + i1 + (perm[jj + j1 + (perm[kk + k1] as uint)] as uint)] as uint;
-    let gi2: uint = perm[ii + i2 + (perm[jj + j2 + (perm[kk + k2] as uint)] as uint)] as uint;
-    let gi3: uint = perm[ii + 1 + (perm[jj + 1 + (perm[kk + 1] as uint)] as uint)] as uint;
+    let gi0: uint = self.perm[ii + (self.perm[jj + (self.perm[kk] as uint)] as uint)] as uint;
+    let gi1: uint = self.perm[ii + i1 + (self.perm[jj + j1 + (self.perm[kk + k1] as uint)] as uint)] as uint;
+    let gi2: uint = self.perm[ii + i2 + (self.perm[jj + j2 + (self.perm[kk + k2] as uint)] as uint)] as uint;
+    let gi3: uint = self.perm[ii + 1 + (self.perm[jj + 1 + (self.perm[kk + 1] as uint)] as uint)] as uint;
 
     // Calculate the contribution from the four corners
     let mut t0: f64 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
