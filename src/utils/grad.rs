@@ -1,8 +1,8 @@
-//! Helper functions to compute gradients-dot-residualvectors (1D to 4D).
+//! Helper functions to compute gradients-dot-residual vectors (1D to 4D).
 
 use utils::if_else;
 
-/// Compute 1D gradient-dot-residualvector.
+/// Compute 1D gradient-dot-residual vector.
 pub fn grad1(hash: uint, x: f64) -> f64 {
   let h: uint = hash & 15;
   let mut grad: f64 = 1.0 + (h & 7) as f64; // Gradient value 1.0, 2.0, ..., 8.0
@@ -13,7 +13,7 @@ pub fn grad1(hash: uint, x: f64) -> f64 {
   grad * x // Multiply the gradient with the distance
 }
 
-/// Compute 2D gradient-dot-residualvector.
+/// Compute 2D gradient-dot-residual vector.
 pub fn grad2(hash: uint, x: f64, y: f64) -> f64 {
   // Convert low 3 bits of hash code into 8 simple gradient directions,
   // and compute the dot product with (x,y).
@@ -24,7 +24,7 @@ pub fn grad2(hash: uint, x: f64, y: f64) -> f64 {
   if_else(h&1 != 0, -u, u) + if_else(h&2 != 0, -2.0*v, 2.0*v)
 }
 
-/// Compute 3D gradient-dot-residualvector.
+/// Compute 3D gradient-dot-residual vector.
 pub fn grad3(hash: uint, x: f64, y: f64, z: f64) -> f64 {
   // Convert low 4 bits of hash code into 12 simple gradient directions,
   // and compute dot product.
