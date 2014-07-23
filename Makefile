@@ -52,7 +52,7 @@ TARGET = $(shell rustc --version verbose 2> /dev/null | awk "/host:/ { print \$$
 # TARGET = x86_64-unknown-linux-gnu
 # TARGET = x86_64-apple-darwin
 
-TARGET_LIB_DIR = target/deps/
+TARGET_LIB_DIR = target/
 
 # Ask 'rustc' the file name of the library and use a dummy name if the source has not been created yet.
 # The dummy file name is used to trigger the creation of the source first time.
@@ -210,7 +210,7 @@ rust-ci-exe: $(EXE_ENTRY_FILE)
 	)
 
 doc: $(SOURCE_FILES) | src/
-	$(Q)$(RUSTDOC) $(LIB_ENTRY_FILE) -L "$(TARGET_LIB_DIR)" \
+	$(Q)$(RUSTDOC) --test $(LIB_ENTRY_FILE) -L "$(TARGET_LIB_DIR)" \
 	&& echo "--- Built documentation"
 
 run: exe
