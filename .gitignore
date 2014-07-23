@@ -4,6 +4,9 @@
 *.o
 *.so
 *.swp
+*.old
+*.bak
+*.kate-swp
 *.dylib
 *.dSYM
 *.dll

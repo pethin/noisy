@@ -3,14 +3,13 @@ env:
     - secure: bLxCH204PzY/OHPkdxlqKeVXZwps4SBUfviF7ZEwxcOnIz1IvxH5X4/V/C/L+ye1qeyErmfbUFlIPcD4134dzCYCRcq4cWupcQqGPe754ylfgjV+JYyk8Pywu4Cs/86Sh13sL7ZnWix0OCdaZ9Z8YXT9QSsTgz1HzYb4T5ZYZ2U=
 language: c
 install:
-  - curl -O http://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.gz
-  - tar xfz rust-nightly-x86_64-unknown-linux-gnu.tar.gz
-  - (cd rust-nightly-x86_64-unknown-linux-gnu/ && sudo ./install.sh)
+  # Install rustc and cargo
+  - (curl www.rust-lang.org/rustup.sh | sudo bash)
 script:
   - rustc --version
-  - make lib
-  - make test-internal
-  - make bench-internal
+  - cargo build
+  - cargo test
+  - cargo test --bench
   - make doc
   - make examples
 after_script:
