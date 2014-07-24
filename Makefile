@@ -211,6 +211,8 @@ rust-ci-exe: $(EXE_ENTRY_FILE)
 
 doc: $(SOURCE_FILES) | src/
 	$(Q)$(RUSTDOC) --test $(LIB_ENTRY_FILE) -L "$(TARGET_LIB_DIR)" \
+	&& echo "--- Tested documentation"
+	$(Q)$(RUSTDOC) $(LIB_ENTRY_FILE) -L "$(TARGET_LIB_DIR)" \
 	&& echo "--- Built documentation"
 
 run: exe
