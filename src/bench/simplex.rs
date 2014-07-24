@@ -1,53 +1,53 @@
-use std::rand::{weak_rng, Rng, XorShiftRng};
+use std::rand::{ weak_rng, Rng, XorShiftRng };
 use test::Bencher;
 
-use gen::{NoiseGen, Simplex};
+use gen::{ NoiseGen, Simplex };
 
 #[bench]
 fn bench_simplex_new(b: &mut Bencher) {
-  b.iter(|| {
-    Simplex::new();
-  })
+    b.iter(|| {
+        Simplex::new();
+    })
 }
 
 #[bench]
 fn bench_simplex_from_rng(b: &mut Bencher) {
-  let mut rng: XorShiftRng = weak_rng();
-  b.iter(|| {
-    Simplex::from_rng(&mut rng);
-  })
+    let mut rng: XorShiftRng = weak_rng();
+    b.iter(|| {
+        Simplex::from_rng(&mut rng);
+    })
 }
 
 #[bench]
 fn bench_simplex_noise1d(b: &mut Bencher) {
-  let mut rng: XorShiftRng = weak_rng();
-  let simplex = Simplex::from_rng(&mut rng);
-  b.iter(|| {
-    simplex.noise1d(rng.gen());
-  })
+    let mut rng: XorShiftRng = weak_rng();
+    let simplex = Simplex::from_rng(&mut rng);
+    b.iter(|| {
+        simplex.noise1d(rng.gen());
+    })
 }
 
 #[bench]
 fn bench_simplex_noise2d(b: &mut Bencher) {
-  let mut rng: XorShiftRng = weak_rng();
-  let simplex = Simplex::from_rng(&mut rng);
-  b.iter(|| {
-    simplex.noise2d(
-      rng.gen(),
-      rng.gen()
-    );
-  })
+    let mut rng: XorShiftRng = weak_rng();
+    let simplex = Simplex::from_rng(&mut rng);
+    b.iter(|| {
+        simplex.noise2d(
+            rng.gen(),
+            rng.gen()
+        );
+    })
 }
 
 #[bench]
 fn bench_simplex_noise3d(b: &mut Bencher) {
-  let mut rng: XorShiftRng = weak_rng();
-  let simplex = Simplex::from_rng(&mut rng);
-  b.iter(|| {
-    simplex.noise3d(
-      rng.gen(),
-      rng.gen(),
-      rng.gen()
-    );
-  })
+    let mut rng: XorShiftRng = weak_rng();
+    let simplex = Simplex::from_rng(&mut rng);
+    b.iter(|| {
+        simplex.noise3d(
+            rng.gen(),
+            rng.gen(),
+            rng.gen()
+        );
+    })
 }
