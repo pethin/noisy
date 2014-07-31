@@ -9,7 +9,7 @@ script:
   - rustc --version
   - cargo build
   - cargo test
-  - cargo test --bench
+  - cargo test -- --bench
   - make doc
   - make examples
 after_script:
