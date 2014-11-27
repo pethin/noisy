@@ -7,7 +7,7 @@ macro_rules! test_simplex_from_rng(
     ($t: ident) => ({
         let mut rng = match $t::new() {
             Ok(r) => r,
-            Err(e) => fail!("Failed to create RNG: {}", e)
+            Err(e) => panic!("Failed to create RNG: {}", e)
         };
 
         Simplex::from_rng(&mut rng);
@@ -18,7 +18,7 @@ macro_rules! test_simplex_from_rand_rng(
     ($t: ty) => ({
         let mut rng: $t = match OsRng::new() {
             Ok(mut r) => r.gen(),
-            Err(e) => fail!("Failed to create seeded RNG: {}", e)
+            Err(e) => panic!("Failed to create seeded RNG: {}", e)
         };
 
         Simplex::from_rng(&mut rng);
