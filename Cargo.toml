@@ -10,7 +10,7 @@ keywords = ["noise", "procedural", "coherent", "random"]
 authors = ["Peter Nguyen <peter.hieu.nguyen@gmail.com>"]
 
 [lib]
-name = "noise"
+name = "noisy"
 path = "src/lib.rs"
 
 [[example]]
