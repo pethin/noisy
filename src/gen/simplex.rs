@@ -62,7 +62,8 @@ impl Simplex {
     /// # use std::rand::{StdRng, SeedableRng};
     /// use noise::gen::Simplex;
     ///
-    /// let mut rng: StdRng = SeedableRng::from_seed(&[1337]);
+    /// let seed: &[_] = &[1337];
+    /// let mut rng: StdRng = SeedableRng::from_seed(seed);
     /// let simplex = Simplex::from_rng(&mut rng);
     /// ```
     pub fn from_rng<R: Rng>(rng: &mut R) -> Simplex {
@@ -84,7 +85,7 @@ impl NoiseGen for Simplex {
     /// let simplex = Simplex::new();
     /// let val = simplex.noise1d(123.0 * 0.02);
     /// ```
-    #[allow(uppercase_variables)]
+    #[allow(non_snake_case)]
     fn noise1d(&self, xin: f64) -> f64 {
         // Noise contributions
         let mut n0: f64;
@@ -126,7 +127,7 @@ impl NoiseGen for Simplex {
     ///     132.0 * 0.02
     /// );
     /// ```
-    #[allow(uppercase_variables)]
+    #[allow(non_snake_case)]
     fn noise2d(&self, xin: f64, yin: f64) -> f64 {
         // Noise contributions from the three corners
         let mut n0: f64;
@@ -221,7 +222,7 @@ impl NoiseGen for Simplex {
     ///     321.0 * 0.02
     /// );
     /// ```
-    #[allow(uppercase_variables)]
+    #[allow(non_snake_case)]
     fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
         // Noise contributions from the four corners
         let mut n0: f64;

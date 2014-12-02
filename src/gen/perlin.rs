@@ -56,7 +56,8 @@ impl Perlin {
     /// # use std::rand::{StdRng, SeedableRng};
     /// use noise::gen::Perlin;
     ///
-    /// let mut rng: StdRng = SeedableRng::from_seed(&[1337]);
+    /// let seed: &[_] = &[1337];
+    /// let mut rng: StdRng = SeedableRng::from_seed(seed);
     /// let perlin = Perlin::from_rng(&mut rng);
     /// ```
     pub fn from_rng<R: Rng>(rng: &mut R) -> Perlin {

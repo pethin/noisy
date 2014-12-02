@@ -60,7 +60,7 @@ make examples
 
 #![crate_name = "noise"]
 #![crate_type = "lib"]
-#![warn(missing_doc)]
+#![warn(missing_docs)]
 #![feature(macro_rules)]
 
 extern crate rand;
