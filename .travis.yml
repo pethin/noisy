@@ -1,6 +1,6 @@
 env:
   global:
-    - secure: Df80FE6VW8dCaqrfrQoA5wH2SdL/b3rDeNRXnmTJOBNvPvV7Bdtlvwtvtsw8ZEcENYd+RMn2XNrBbX2yA2cEV17BwcAZm4S4X4XvOsQIgHXNe573IgwuvtpzEyQwwnF6Eq56pI1jLw8AY6pyed2+Ehbj1HnA4ByOzADwl+kpP2Q=
+    - secure: FMIb2m6XcZI4lMlJlpZuLIIxFynbGX+4VPpBG9jmzHhkjOYqt018Yd6Z2fEz7SAAbO8sUF2mMh0KRXzp8HBaBgD1cO65rOrLXoYwDk0ZLr2GrNd0w6+VrueLUbXl/odAkacWtfzFb6n5MUSJ4wpegk8gPlqf8QojfZGgoXD+qQE=
 
 language: rust
 rust: nightly
@@ -13,4 +13,4 @@ script:
   - cargo doc --verbose
 
 after_script:
-  - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh
+  - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | /bin/sh
