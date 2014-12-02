@@ -1,6 +1,6 @@
-extern crate noise;
+extern crate noisy;
 
-use noise::gen::{ NoiseGen, Checkerboard };
+use noisy::gen::{ NoiseGen, Checkerboard };
 
 // Width of the output in columns.
 static WIDTH: int = 80;

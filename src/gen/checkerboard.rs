@@ -14,7 +14,7 @@ impl Checkerboard {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::Checkerboard;
+    /// use noisy::gen::Checkerboard;
     ///
     /// let checkerboard = Checkerboard::new();
     /// ```
@@ -29,7 +29,7 @@ impl NoiseGen for Checkerboard {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Checkerboard};
+    /// use noisy::gen::{NoiseGen, Checkerboard};
     ///
     /// let checkerboard = Checkerboard::new();
     /// let val = checkerboard.noise1d(1.0);
@@ -45,7 +45,7 @@ impl NoiseGen for Checkerboard {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Checkerboard};
+    /// use noisy::gen::{NoiseGen, Checkerboard};
     ///
     /// let checkerboard = Checkerboard::new();
     /// let val = checkerboard.noise2d(1.0, 2.0);
@@ -62,7 +62,7 @@ impl NoiseGen for Checkerboard {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Checkerboard};
+    /// use noisy::gen::{NoiseGen, Checkerboard};
     ///
     /// let checkerboard = Checkerboard::new();
     /// let val = checkerboard.noise3d(1.0, 2.0, 3.0);

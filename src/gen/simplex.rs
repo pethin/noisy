@@ -29,7 +29,7 @@ impl Simplex {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::Simplex;
+    /// use noisy::gen::Simplex;
     ///
     /// let simplex = Simplex::new();
     /// ```
@@ -48,7 +48,7 @@ impl Simplex {
     ///
     /// ```rust
     /// # use std::rand::StdRng;
-    /// use noise::gen::Simplex;
+    /// use noisy::gen::Simplex;
     ///
     /// let mut rng: StdRng = StdRng::new().unwrap();
     /// let simplex = Simplex::from_rng(&mut rng);
@@ -60,7 +60,7 @@ impl Simplex {
     ///
     /// ```rust
     /// # use std::rand::{StdRng, SeedableRng};
-    /// use noise::gen::Simplex;
+    /// use noisy::gen::Simplex;
     ///
     /// let seed: &[_] = &[1337];
     /// let mut rng: StdRng = SeedableRng::from_seed(seed);
@@ -80,7 +80,7 @@ impl NoiseGen for Simplex {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Simplex};
+    /// use noisy::gen::{NoiseGen, Simplex};
     ///
     /// let simplex = Simplex::new();
     /// let val = simplex.noise1d(123.0 * 0.02);
@@ -119,7 +119,7 @@ impl NoiseGen for Simplex {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Simplex};
+    /// use noisy::gen::{NoiseGen, Simplex};
     ///
     /// let simplex = Simplex::new();
     /// let val = simplex.noise2d(
@@ -213,7 +213,7 @@ impl NoiseGen for Simplex {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Simplex};
+    /// use noisy::gen::{NoiseGen, Simplex};
     ///
     /// let simplex = Simplex::new();
     /// let val = simplex.noise3d(

@@ -23,7 +23,7 @@ impl Perlin {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::Perlin;
+    /// use noisy::gen::Perlin;
     ///
     /// let perlin = Perlin::new();
     /// ```
@@ -42,7 +42,7 @@ impl Perlin {
     ///
     /// ```rust
     /// # use std::rand::StdRng;
-    /// use noise::gen::Perlin;
+    /// use noisy::gen::Perlin;
     ///
     /// let mut rng: StdRng = StdRng::new().unwrap();
     /// let perlin = Perlin::from_rng(&mut rng);
@@ -54,7 +54,7 @@ impl Perlin {
     ///
     /// ```rust
     /// # use std::rand::{StdRng, SeedableRng};
-    /// use noise::gen::Perlin;
+    /// use noisy::gen::Perlin;
     ///
     /// let seed: &[_] = &[1337];
     /// let mut rng: StdRng = SeedableRng::from_seed(seed);
@@ -74,7 +74,7 @@ impl NoiseGen for Perlin {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Perlin};
+    /// use noisy::gen::{NoiseGen, Perlin};
     ///
     /// let perlin = Perlin::new();
     /// let val = perlin.noise1d(123.0 * 0.04);
@@ -109,7 +109,7 @@ impl NoiseGen for Perlin {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Perlin};
+    /// use noisy::gen::{NoiseGen, Perlin};
     ///
     /// let perlin = Perlin::new();
     /// let val = perlin.noise2d(
@@ -159,7 +159,7 @@ impl NoiseGen for Perlin {
     /// # Example
     ///
     /// ```rust
-    /// use noise::gen::{NoiseGen, Perlin};
+    /// use noisy::gen::{NoiseGen, Perlin};
     ///
     /// let perlin = Perlin::new();
     /// let val = perlin.noise3d(
