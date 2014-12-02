@@ -6,11 +6,11 @@ language: rust
 rust: nightly
 
 script:
-  - rustc --version
   - cargo build --verbose
   - cargo test --verbose
   - cargo bench --verbose
   - cargo doc --verbose
 
 after_script:
+  - ln -s target/doc doc
   - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | /bin/sh
