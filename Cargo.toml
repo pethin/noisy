@@ -1,6 +1,7 @@
 [package]
 name = "noisy"
 description = "A procedural noise generation library written for Rust."
+documentation = "http://www.rust-ci.org/cacteye/noisy/doc/noisy/"
 homepage = "https://github.com/cacteye/noisy"
 repository = "https://github.com/cacteye/noisy"
 readme = "README.md"
