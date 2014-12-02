@@ -11,6 +11,7 @@ script:
   - cargo bench --verbose
   - cargo doc --verbose
 
-after_script:
-  - ln -s target/doc doc
+after_success:
+  - cp -R target/doc doc
   - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | /bin/sh
+  - rm -r doc
