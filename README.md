@@ -40,18 +40,17 @@ If you encounter problems, make sure you have the last version before creating a
 ```ignore
 git clone --recursive git://github.com/cacteye/noisy.git
 cd noisy
-make deps
-make
+cargo build
 ```
 
 You can build the documentation using:
 
 ```ignore
-make doc
+cargo doc
 ```
 
 You can build the included examples using:
 
 ```ignore
-make examples
+cargo test
 ```
