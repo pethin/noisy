@@ -12,7 +12,7 @@ macro_rules! test_simplex_from_rng(
 
         Simplex::from_rng(&mut rng);
     });
-)
+);
 
 macro_rules! test_simplex_from_rand_rng(
     ($t: ty) => ({
@@ -23,7 +23,7 @@ macro_rules! test_simplex_from_rand_rng(
 
         Simplex::from_rng(&mut rng);
     });
-)
+);
 
 #[test]
 fn test_simplex_new() {

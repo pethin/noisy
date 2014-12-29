@@ -12,7 +12,7 @@ macro_rules! test_perlin_from_rng(
 
         Perlin::from_rng(&mut rng);
     });
-)
+);
 
 macro_rules! test_perlin_from_rand_rng(
     ($t: ty) => ({
@@ -23,7 +23,7 @@ macro_rules! test_perlin_from_rand_rng(
 
         Perlin::from_rng(&mut rng);
     });
-)
+);
 
 #[test]
 fn test_perlin_new() {

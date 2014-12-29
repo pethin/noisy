@@ -6,6 +6,7 @@ use utils::if_else;
 use gen::NoiseGen;
 
 /// A check pattern generator.
+#[deriving(Copy)]
 pub struct Checkerboard;
 
 impl Checkerboard {
