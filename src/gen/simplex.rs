@@ -8,7 +8,7 @@
 
 use std::rand::{ Rng, XorShiftRng, weak_rng };
 
-use utils::fastfloor;
+use utils::fast_floor;
 use utils::grad::{ grad1, grad2, grad3 };
 use gen::NoiseGen;
 
@@ -91,7 +91,7 @@ impl NoiseGen for Simplex {
         let mut n0: f64;
         let mut n1: f64;
 
-        let i0: int = fastfloor(xin);
+        let i0: int = fast_floor(xin);
         let i1: int = i0 + 1;
         let x0: f64 = xin - i0 as f64;
         let x1: f64 = x0 - 1.0;
@@ -136,8 +136,8 @@ impl NoiseGen for Simplex {
 
         // Skew the input space to determine which simplex cell we're in
         let s: f64 = (xin + yin) * F2; // Hairy factor for 2D
-        let i: int = fastfloor(xin + s);
-        let j: int = fastfloor(yin + s);
+        let i: int = fast_floor(xin + s);
+        let j: int = fast_floor(yin + s);
         let t: f64 = ((i + j) as f64) * G2;
 
         // Unskew the cell origin back to (x, y) space
@@ -232,9 +232,9 @@ impl NoiseGen for Simplex {
 
         // Skew the input space to determine which simplex cell we're in
         let s: f64 = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
-        let i: int = fastfloor(xin + s);
-        let j: int = fastfloor(yin + s);
-        let k: int = fastfloor(zin + s);
+        let i: int = fast_floor(xin + s);
+        let j: int = fast_floor(yin + s);
+        let k: int = fast_floor(zin + s);
         let t: f64 = ((i + j + k) as f64) * G3;
 
         // Unskew the cell origin back to (x, y, z) space

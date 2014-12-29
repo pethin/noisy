@@ -7,7 +7,7 @@
 
 use std::rand::{ Rng, XorShiftRng, weak_rng };
 
-use utils::{ fade, fastfloor, lerp };
+use utils::{ fade, fast_floor, lerp };
 use utils::grad::{ grad1, grad2, grad3 };
 use gen::NoiseGen;
 
@@ -80,7 +80,7 @@ impl NoiseGen for Perlin {
     /// let val = perlin.noise1d(123.0 * 0.04);
     /// ```
     fn noise1d(&self, xin: f64) -> f64 {
-        let ix0: int = fastfloor(xin); // Integer part of x
+        let ix0: int = fast_floor(xin); // Integer part of x
         let fx0: f64 = xin - ix0 as f64; // Fractional part of x
         let fx1: f64 = fx0 - 1.0;
         let ix1: int = ix0 + 1;
@@ -118,8 +118,8 @@ impl NoiseGen for Perlin {
     /// );
     /// ```
     fn noise2d(&self, xin: f64, yin: f64) -> f64 {
-        let ix0: int = fastfloor(xin); // Integer part of x
-        let iy0: int = fastfloor(yin); // Integer part of y
+        let ix0: int = fast_floor(xin); // Integer part of x
+        let iy0: int = fast_floor(yin); // Integer part of y
         let fx0: f64 = xin - ix0 as f64; // Fractional part of x
         let fy0: f64 = yin - iy0 as f64; // Fractional part of y
         let fx1: f64 = fx0 - 1.0;
@@ -169,9 +169,9 @@ impl NoiseGen for Perlin {
     /// );
     /// ```
     fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
-        let ix0: int = fastfloor(xin); // Integer part of x
-        let iy0: int = fastfloor(yin); // Integer part of y
-        let iz0: int = fastfloor(zin); // Integer part of z
+        let ix0: int = fast_floor(xin); // Integer part of x
+        let iy0: int = fast_floor(yin); // Integer part of y
+        let iz0: int = fast_floor(zin); // Integer part of z
         let fx0: f64 = xin - ix0 as f64; // Fractional part of x
         let fy0: f64 = yin - iy0 as f64; // Fractional part of y
         let fz0: f64 = zin - iz0 as f64; // Fractional part of z
