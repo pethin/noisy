@@ -36,7 +36,8 @@ impl Simplex {
     pub fn new() -> Simplex {
         let mut rng: XorShiftRng = weak_rng();
 
-        let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
+        let mut p: Vec<u8> = Vec::from_fn(256, |idx| idx as u8);
+        rng.shuffle(p.as_mut_slice());
         let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
 
         Simplex { perm: perm }
@@ -67,7 +68,8 @@ impl Simplex {
     /// let simplex = Simplex::from_rng(&mut rng);
     /// ```
     pub fn from_rng<R: Rng>(rng: &mut R) -> Simplex {
-        let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
+        let mut p: Vec<u8> = Vec::from_fn(256, |idx| idx as u8);
+        rng.shuffle(p.as_mut_slice());
         let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
 
         Simplex { perm: perm }

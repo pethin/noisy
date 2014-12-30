@@ -30,7 +30,8 @@ impl Perlin {
     pub fn new() -> Perlin {
         let mut rng: XorShiftRng = weak_rng();
 
-        let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
+        let mut p: Vec<u8> = Vec::from_fn(256, |idx| idx as u8);
+        rng.shuffle(p.as_mut_slice());
         let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
 
         Perlin { perm: perm }
@@ -61,7 +62,8 @@ impl Perlin {
     /// let perlin = Perlin::from_rng(&mut rng);
     /// ```
     pub fn from_rng<R: Rng>(rng: &mut R) -> Perlin {
-        let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
+        let mut p: Vec<u8> = Vec::from_fn(256, |idx| idx as u8);
+        rng.shuffle(p.as_mut_slice());
         let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
 
         Perlin { perm: perm }
