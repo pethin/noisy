@@ -1,7 +1,5 @@
 //! Outputs a [check pattern](http://en.wikipedia.org/wiki/Check_(pattern))
 
-use std::num::Float;
-
 use utils::if_else;
 use gen::NoiseGen;
 
