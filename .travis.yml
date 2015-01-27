@@ -1,16 +1,17 @@
 env:
   global:
-    - secure: bLxCH204PzY/OHPkdxlqKeVXZwps4SBUfviF7ZEwxcOnIz1IvxH5X4/V/C/L+ye1qeyErmfbUFlIPcD4134dzCYCRcq4cWupcQqGPe754ylfgjV+JYyk8Pywu4Cs/86Sh13sL7ZnWix0OCdaZ9Z8YXT9QSsTgz1HzYb4T5ZYZ2U=
-language: c
-install:
-  # Install rustc and cargo
-  - (curl www.rust-lang.org/rustup.sh | sudo bash)
+    - secure: FMIb2m6XcZI4lMlJlpZuLIIxFynbGX+4VPpBG9jmzHhkjOYqt018Yd6Z2fEz7SAAbO8sUF2mMh0KRXzp8HBaBgD1cO65rOrLXoYwDk0ZLr2GrNd0w6+VrueLUbXl/odAkacWtfzFb6n5MUSJ4wpegk8gPlqf8QojfZGgoXD+qQE=
+
+language: rust
+rust: nightly
+
 script:
-  - rustc --version
-  - cargo build
-  - cargo test
-  - cargo test -- --bench
-  - make doc
-  - make examples
-after_script:
-  - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh
+  - cargo build --verbose
+  - cargo test --verbose
+  - cargo bench --verbose
+  - cargo doc --verbose
+
+after_success:
+  - cp -R target/doc doc
+  - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | /bin/sh
+  - rm -r doc

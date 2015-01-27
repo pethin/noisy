@@ -12,7 +12,7 @@ macro_rules! test_perlin_from_rng(
 
         Perlin::from_rng(&mut rng);
     });
-)
+);
 
 macro_rules! test_perlin_from_rand_rng(
     ($t: ty) => ({
@@ -23,7 +23,7 @@ macro_rules! test_perlin_from_rand_rng(
 
         Perlin::from_rng(&mut rng);
     });
-)
+);
 
 #[test]
 fn test_perlin_new() {
@@ -57,9 +57,9 @@ fn test_perlin_from_xorshiftrng() {
 
 #[test]
 fn test_perlin_from_taskrng() {
-    let mut taskRng: TaskRng = task_rng();
+    let mut task_rng: TaskRng = task_rng();
 
-    Perlin::from_rng(&mut taskRng);
+    Perlin::from_rng(&mut task_rng);
 }
 
 #[test]

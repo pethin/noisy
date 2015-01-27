@@ -1,22 +1,22 @@
 /*!
-# noise
+# noisy
 
-**noise** is a procedural noise generation library written for Rust.
+**noisy** is a procedural noise generation library written for Rust.
 
-## Using **noise**
-All the generators of **noise** are grouped in one place: the `gen` module.
+## Using **noisy**
+All the generators of **noisy** are grouped in one place: the `gen` module.
 
 * You can import all the generators using:
 
 ```ignore
-use noise::gen::*;
+use noisy::gen::*;
 ```
 
-The preferred way to use **noise** is to import generators explicitly:
+The preferred way to use **noisy** is to import generators explicitly:
 
 ```rust
-extern crate noise;
-use noise::gen::{NoiseGen, Simplex};
+extern crate noisy;
+use noisy::gen::{NoiseGen, Simplex};
 
 fn main() {
     let simplex = Simplex::new();
@@ -27,11 +27,11 @@ fn main() {
 ```
 
 ## Features
-**noise** is meant to be a general-purpose purpose procedural noise generation library that
+**noisy** is meant to be a general-purpose purpose procedural noise generation library that
 includes a variety of generators including:
 
 * Simplex noise.
-* Imporoved Perlin noise (not implemented).
+* Imporoved Perlin noise.
 * Perlin noise (not implemented).
 
 ## Compilation
@@ -39,28 +39,25 @@ You will need the last rust compiler from the master branch.
 If you encounter problems, make sure you have the last version before creating an issue.
 
 ```ignore
-git clone --recursive git://github.com/cacteye/noise.git
-cd noise
-make deps
-make
+git clone --recursive git://github.com/cacteye/noisy.git
+cd noisy
+cargo build
 ```
 
 You can build the documentation using:
 
 ```ignore
-make doc
+cargo doc
 ```
 
 You can build the included examples using:
 
 ```ignore
-make examples
+cargo test
 ```
 */
 
-#![crate_name = "noise"]
-#![crate_type = "lib"]
-#![warn(missing_doc)]
+#![warn(missing_docs)]
 #![feature(macro_rules)]
 
 extern crate rand;
