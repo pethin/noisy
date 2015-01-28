@@ -6,7 +6,7 @@ use noisy::gen::{ NoiseGen, Simplex };
 static WIDTH: uint = 80;
 
 // A five color gradient used for the output.
-static GRADIENT: [&'static str, ..5] = [" ", "░", "▒", "▓", "█"];
+static GRADIENT: [&'static str; 5] = [" ", "░", "▒", "▓", "█"];
 
 fn main() {
     // Create a new simplex instance.
