@@ -30,8 +30,8 @@ impl Perlin {
     pub fn new() -> Perlin {
         let mut rng: XorShiftRng = weak_rng();
 
-        let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
-        let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
+        let p: Vec<u8> = (0..256).map(|_| rng.gen::<u8>()).collect();//Vec::from_fn(256, |_| rng.gen::<u8>());
+        let perm: Vec<u8> = (0..512).map(|idx:i32| {p[(idx & 255) as usize]}).collect();//Vec::from_fn(512, |idx| p[idx & 255]);
 
         Perlin { perm: perm }
     }
@@ -61,8 +61,8 @@ impl Perlin {
     /// let perlin = Perlin::from_rng(&mut rng);
     /// ```
     pub fn from_rng<R: Rng>(rng: &mut R) -> Perlin {
-        let p: Vec<u8> = Vec::from_fn(256, |_| rng.gen::<u8>());
-        let perm: Vec<u8> = Vec::from_fn(512, |idx| p[idx & 255]);
+        let p: Vec<u8> = (0..256).map(|_| rng.gen::<u8>()).collect();//Vec::from_fn(256, |_| rng.gen::<u8>());
+        let perm: Vec<u8> = (0..512).map(|idx:i32| {p[(idx & 255) as usize]}).collect();//Vec::from_fn(512, |idx| p[idx & 255]);
 
         Perlin { perm: perm }
     }

@@ -5,14 +5,14 @@ use std::rand::{ XorShiftRng, SeedableRng };
 use noisy::gen::{ NoiseGen, Simplex };
 
 // Seed used to create a random number generator.
-static SEED: [u32, ..4] = [9123678, 7890124, 6123462, 2789431];
+static SEED: [u32; 4] = [9123678, 7890124, 6123462, 2789431];
 // Width of the output in columns.
 static WIDTH: uint = 80;
 // Height of the output in rows.
 static HEIGHT: uint = 80;
 
 // A five color gradient used for the output.
-static GRADIENT: [&'static str, ..5] = [" ", "░", "▒", "▓", "█"];
+static GRADIENT: [&'static str; 5] = [" ", "░", "▒", "▓", "█"];
 
 fn main() {
     // Create a new XorShiftRng using the seed.

@@ -6,7 +6,7 @@ use noisy::gen::{ NoiseGen, Checkerboard };
 static WIDTH: int = 80;
 
 // A five color gradient used for the output.
-static GRADIENT: [&'static str, ..2] = [" ", "█"];
+static GRADIENT: [&'static str; 2] = [" ", "█"];
 
 fn main() {
     // Create a new simplex instance.
