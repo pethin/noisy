@@ -1,3 +1,5 @@
+#![feature(rand)]
+
 /*!
 # noisy
 
@@ -58,8 +60,6 @@ cargo test
 */
 
 #![warn(missing_docs)]
-
-#![feature(rand)]
 
 
 extern crate rand;
