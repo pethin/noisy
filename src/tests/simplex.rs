@@ -65,7 +65,7 @@ fn test_simplex_from_threadrng() {
 #[test]
 fn test_simplex_noise1d() {
     let simplex = Simplex::new();
-    for _ in range(0u, 10000) {
+    for _ in range(0us, 10000) {
         simplex.noise1d(random());
     }
 }
@@ -73,7 +73,7 @@ fn test_simplex_noise1d() {
 #[test]
 fn test_simplex_noise2d() {
     let simplex = Simplex::new();
-    for _ in range(0u, 10000) {
+    for _ in range(0us, 10000) {
         simplex.noise2d(
             random(),
             random()
@@ -84,7 +84,7 @@ fn test_simplex_noise2d() {
 #[test]
 fn test_simplex_noise3d() {
     let simplex = Simplex::new();
-    for _ in range(0u, 10000) {
+    for _ in range(0us, 10000) {
         simplex.noise3d(
             random(),
             random(),

@@ -12,7 +12,7 @@ use utils::grad::{ grad1, grad2, grad3 };
 use gen::NoiseGen;
 
 /// A Perlin noise generator.
-#[deriving(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Perlin {
     perm: Vec<u8>
 }
@@ -80,21 +80,21 @@ impl NoiseGen for Perlin {
     /// let val = perlin.noise1d(123.0 * 0.04);
     /// ```
     fn noise1d(&self, xin: f64) -> f64 {
-        let ix0: int = fastfloor(xin); // Integer part of x
+        let ix0: i64 = fastfloor(xin); // Integer part of x
         let fx0: f64 = xin - ix0 as f64; // Fractional part of x
         let fx1: f64 = fx0 - 1.0;
-        let ix1: int = ix0 + 1;
+        let ix1: i64 = ix0 + 1;
 
         // Wrap the integer indices at 256, to avoid indexing perm[] out of bounds
-        let ii: uint = (ix0 & 255) as uint;
-        let jj: uint = (ix1 & 255) as uint;
+        let ii: usize = (ix0 & 255) as usize;
+        let jj: usize = (ix1 & 255) as usize;
 
         // Compute the fade curve.
         let s: f64 = fade(fx0);
 
         // Work out the hashed gradient indices.
-        let gi0: uint = self.perm[ii] as uint;
-        let gi1: uint = self.perm[jj] as uint;
+        let gi0: u8 = self.perm[ii] as u8;
+        let gi1: u8 = self.perm[jj] as u8;
 
         // Calculate the gradients.
         let nx0 = grad1(gi0, fx0);
@@ -118,28 +118,28 @@ impl NoiseGen for Perlin {
     /// );
     /// ```
     fn noise2d(&self, xin: f64, yin: f64) -> f64 {
-        let ix0: int = fastfloor(xin); // Integer part of x
-        let iy0: int = fastfloor(yin); // Integer part of y
+        let ix0: i64 = fastfloor(xin); // Integer part of x
+        let iy0: i64 = fastfloor(yin); // Integer part of y
         let fx0: f64 = xin - ix0 as f64; // Fractional part of x
         let fy0: f64 = yin - iy0 as f64; // Fractional part of y
         let fx1: f64 = fx0 - 1.0;
         let fy1: f64 = fy0 - 1.0;
 
         // Wrap the integer indices at 256, to avoid indexing perm[] out of bounds
-        let ix1: uint = ((ix0 + 1) & 255) as uint;
-        let iy1: uint = ((iy0 + 1) & 255) as uint;
-        let ii: uint = (ix0 & 255) as uint;
-        let jj: uint = (iy0 & 255) as uint;
+        let ix1: usize = ((ix0 + 1) & 255) as usize;
+        let iy1: usize = ((iy0 + 1) & 255) as usize;
+        let ii: usize = (ix0 & 255) as usize;
+        let jj: usize = (iy0 & 255) as usize;
 
         // Compute the fade curves.
         let t: f64 = fade(fy0);
         let s: f64 = fade(fx0);
 
         // Work out the hashed gradient indices.
-        let gi0: uint = self.perm[ii + (self.perm[jj] as uint)] as uint;
-        let gi1: uint = self.perm[ii + (self.perm[iy1] as uint)] as uint;
-        let gi2: uint = self.perm[ix1 + (self.perm[jj] as uint)] as uint;
-        let gi3: uint = self.perm[ix1 + (self.perm[iy1] as uint)] as uint;
+        let gi0: u8 = self.perm[ii + (self.perm[jj] as usize)] as u8;
+        let gi1: u8 = self.perm[ii + (self.perm[iy1] as usize)] as u8;
+        let gi2: u8 = self.perm[ix1 + (self.perm[jj] as usize)] as u8;
+        let gi3: u8 = self.perm[ix1 + (self.perm[iy1] as usize)] as u8;
 
         // Calculate the gradients.
         let nx0: f64 = grad2(gi0, fx0, fy0);
@@ -169,9 +169,9 @@ impl NoiseGen for Perlin {
     /// );
     /// ```
     fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
-        let ix0: int = fastfloor(xin); // Integer part of x
-        let iy0: int = fastfloor(yin); // Integer part of y
-        let iz0: int = fastfloor(zin); // Integer part of z
+        let ix0: i64 = fastfloor(xin); // Integer part of x
+        let iy0: i64 = fastfloor(yin); // Integer part of y
+        let iz0: i64 = fastfloor(zin); // Integer part of z
         let fx0: f64 = xin - ix0 as f64; // Fractional part of x
         let fy0: f64 = yin - iy0 as f64; // Fractional part of y
         let fz0: f64 = zin - iz0 as f64; // Fractional part of z
@@ -180,12 +180,12 @@ impl NoiseGen for Perlin {
         let fz1: f64 = fz0 - 1.0;
 
         // Wrap the integer indices at 256, to avoid indexing perm[] out of bounds
-        let ix1: uint = ((ix0 + 1) & 255) as uint;
-        let iy1: uint = ((iy0 + 1) & 255) as uint;
-        let iz1: uint = ((iz0 + 1) & 255) as uint;
-        let ii: uint = (ix0 & 255) as uint;
-        let jj: uint = (iy0 & 255) as uint;
-        let kk: uint = (iz0 & 255) as uint;
+        let ix1: usize = ((ix0 + 1) & 255) as usize;
+        let iy1: usize = ((iy0 + 1) & 255) as usize;
+        let iz1: usize = ((iz0 + 1) & 255) as usize;
+        let ii: usize = (ix0 & 255) as usize;
+        let jj: usize = (iy0 & 255) as usize;
+        let kk: usize = (iz0 & 255) as usize;
 
         // Compute the fade curves.
         let r: f64 = fade(fz0);
@@ -193,14 +193,14 @@ impl NoiseGen for Perlin {
         let s: f64 = fade(fx0);
 
         // Work out the hashed gradient indices.
-        let gi0: uint = self.perm[ii + (self.perm[jj + (self.perm[kk] as uint)] as uint)] as uint;
-        let gi1: uint = self.perm[ii + (self.perm[jj + (self.perm[iz1] as uint)] as uint)] as uint;
-        let gi2: uint = self.perm[ii + (self.perm[iy1 + (self.perm[kk] as uint)] as uint)] as uint;
-        let gi3: uint = self.perm[ii + (self.perm[iy1 + (self.perm[iz1] as uint)] as uint)] as uint;
-        let gi4: uint = self.perm[ix1 + (self.perm[jj + (self.perm[kk] as uint)] as uint)] as uint;
-        let gi5: uint = self.perm[ix1 + (self.perm[jj + (self.perm[iz1] as uint)] as uint)] as uint;
-        let gi6: uint = self.perm[ix1 + (self.perm[iy1 + (self.perm[kk] as uint)] as uint)] as uint;
-        let gi7: uint = self.perm[ix1 + (self.perm[iy1 + (self.perm[iz1] as uint)] as uint)] as uint;
+        let gi0: u8 = self.perm[ii + (self.perm[jj + (self.perm[kk] as usize)] as usize)] as u8;
+        let gi1: u8 = self.perm[ii + (self.perm[jj + (self.perm[iz1] as usize)] as usize)] as u8;
+        let gi2: u8 = self.perm[ii + (self.perm[iy1 + (self.perm[kk] as usize)] as usize)] as u8;
+        let gi3: u8 = self.perm[ii + (self.perm[iy1 + (self.perm[iz1] as usize)] as usize)] as u8;
+        let gi4: u8 = self.perm[ix1 + (self.perm[jj + (self.perm[kk] as usize)] as usize)] as u8;
+        let gi5: u8 = self.perm[ix1 + (self.perm[jj + (self.perm[iz1] as usize)] as usize)] as u8;
+        let gi6: u8 = self.perm[ix1 + (self.perm[iy1 + (self.perm[kk] as usize)] as usize)] as u8;
+        let gi7: u8 = self.perm[ix1 + (self.perm[iy1 + (self.perm[iz1] as usize)] as usize)] as u8;
 
         // Calculate the gradients.
         let nxy0: f64 = grad3(gi0, fx0, fy0, fz0);
