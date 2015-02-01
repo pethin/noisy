@@ -1,5 +1,5 @@
-use std::rand::{ task_rng, random };
-use std::rand::{ Rng, OsRng, StdRng, TaskRng, IsaacRng, Isaac64Rng, XorShiftRng };
+use std::rand::{ thread_rng, random };
+use std::rand::{ Rng, OsRng, StdRng, ThreadRng, IsaacRng, Isaac64Rng, XorShiftRng };
 
 use gen::{NoiseGen, Simplex};
 
@@ -56,16 +56,16 @@ fn test_simplex_from_xorshiftrng() {
 }
 
 #[test]
-fn test_simplex_from_taskrng() {
-    let mut task_rng: TaskRng = task_rng();
+fn test_simplex_from_threadrng() {
+    let mut thread_rng: ThreadRng = thread_rng();
 
-    Simplex::from_rng(&mut task_rng);
+    Simplex::from_rng(&mut thread_rng);
 }
 
 #[test]
 fn test_simplex_noise1d() {
     let simplex = Simplex::new();
-    for _ in range(0u, 10000) {
+    for _ in range(0us, 10000) {
         simplex.noise1d(random());
     }
 }
@@ -73,7 +73,7 @@ fn test_simplex_noise1d() {
 #[test]
 fn test_simplex_noise2d() {
     let simplex = Simplex::new();
-    for _ in range(0u, 10000) {
+    for _ in range(0us, 10000) {
         simplex.noise2d(
             random(),
             random()
@@ -84,7 +84,7 @@ fn test_simplex_noise2d() {
 #[test]
 fn test_simplex_noise3d() {
     let simplex = Simplex::new();
-    for _ in range(0u, 10000) {
+    for _ in range(0us, 10000) {
         simplex.noise3d(
             random(),
             random(),

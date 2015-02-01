@@ -3,12 +3,12 @@ extern crate noisy;
 use noisy::gen::{ NoiseGen, Checkerboard };
 
 // Width of the output in columns.
-static WIDTH: uint = 80;
+static WIDTH: usize = 80;
 // Height of the output in rows.
-static HEIGHT: uint = 80;
+static HEIGHT: usize = 80;
 
 // A five color gradient used for the output.
-static GRADIENT: [&'static str, ..2] = [" ", "█"];
+static GRADIENT: [&'static str; 2] = [" ", "█"];
 
 fn main() {
     // Create a new simplex instance.
@@ -30,7 +30,7 @@ fn main() {
             val = (val + 1.0) * 0.5;
 
             // Print the columns in the row.
-            print!("{}", GRADIENT[val as uint]);
+            print!("{}", GRADIENT[val as usize]);
         }
         // Start a new row.
         println!("");
