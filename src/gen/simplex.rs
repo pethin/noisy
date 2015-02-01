@@ -18,7 +18,7 @@ static F3: f64 = 0.333333333333_f64;
 static G3: f64 = 0.166666666667_f64;
 
 /// A simplex noise generator.
-#[deriving(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Simplex {
     perm: Vec<u8>
 }
@@ -91,14 +91,14 @@ impl NoiseGen for Simplex {
         let mut n0: f64;
         let mut n1: f64;
 
-        let i0: int = fastfloor(xin);
-        let i1: int = i0 + 1;
+        let i0: i64 = fastfloor(xin);
+        let i1: i64 = i0 + 1;
         let x0: f64 = xin - i0 as f64;
         let x1: f64 = x0 - 1.0;
 
         // Work out the hashed gradient indices
-        let gi0: uint = self.perm[(i0 & 255) as uint] as uint;
-        let gi1: uint = self.perm[(i1 & 255) as uint] as uint;
+        let gi0: u8 = self.perm[(i0 & 255) as usize] as u8;
+        let gi1: u8 = self.perm[(i1 & 255) as usize] as u8;
 
         // Calculate the contributions
         let mut t0: f64 = 1.0 - x0 * x0;
@@ -136,8 +136,8 @@ impl NoiseGen for Simplex {
 
         // Skew the input space to determine which simplex cell we're in
         let s: f64 = (xin + yin) * F2; // Hairy factor for 2D
-        let i: int = fastfloor(xin + s);
-        let j: int = fastfloor(yin + s);
+        let i: i64 = fastfloor(xin + s);
+        let j: i64 = fastfloor(yin + s);
         let t: f64 = ((i + j) as f64) * G2;
 
         // Unskew the cell origin back to (x, y) space
@@ -149,8 +149,8 @@ impl NoiseGen for Simplex {
 
         // For the 2D case, the simplex shape is an equilateral triangle.
         // Determine which shape we are in.
-        let i1: uint; // Offsets for second (middle) corner of simplex in (i, j) coords
-        let j1: uint;
+        let i1: usize; // Offsets for second (middle) corner of simplex in (i, j) coords
+        let j1: usize;
         if x0 > y0 { // Lower triangle, XY order: (0, 0) -> (1, 0) -> (1, 1)
             i1 = 1;
             j1 = 0;
@@ -171,12 +171,12 @@ impl NoiseGen for Simplex {
         let y2: f64 = y0 - 1.0 + 2.0 * G2;
 
         // Wrap the integer indices at 256, to avoid indexing perm[] out of bounds
-        let ii: uint = (i & 255) as uint;
-        let jj: uint = (j & 255) as uint;
+        let ii: usize = (i & 255) as usize;
+        let jj: usize = (j & 255) as usize;
         // Work out the hashed gradient indices of the three simplex corners
-        let gi0: uint = self.perm[ii + self.perm[jj] as uint] as uint;
-        let gi1: uint = self.perm[ii + i1 + (self.perm[jj + j1] as uint)] as uint;
-        let gi2: uint = self.perm[ii + 1 + (self.perm[jj + 1] as uint)] as uint;
+        let gi0: u8 = self.perm[ii + self.perm[jj] as usize] as u8;
+        let gi1: u8 = self.perm[ii + i1 + (self.perm[jj + j1] as usize)] as u8;
+        let gi2: u8 = self.perm[ii + 1 + (self.perm[jj + 1] as usize)] as u8;
 
         // Calculate the contribution from the three corners
         let mut t0: f64 = 0.5 - x0 * x0 - y0 * y0;
@@ -232,9 +232,9 @@ impl NoiseGen for Simplex {
 
         // Skew the input space to determine which simplex cell we're in
         let s: f64 = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
-        let i: int = fastfloor(xin + s);
-        let j: int = fastfloor(yin + s);
-        let k: int = fastfloor(zin + s);
+        let i: i64 = fastfloor(xin + s);
+        let j: i64 = fastfloor(yin + s);
+        let k: i64 = fastfloor(zin + s);
         let t: f64 = ((i + j + k) as f64) * G3;
 
         // Unskew the cell origin back to (x, y, z) space
@@ -248,12 +248,12 @@ impl NoiseGen for Simplex {
 
         // For the 3D case, the simplex shape is a slightly irregular tetrahedron.
         // Determine which simplex we are in.
-        let i1: uint; // Offsets for second corner of simplex in (i, j, k) coords
-        let j1: uint;
-        let k1: uint;
-        let i2: uint; // Offsets for third corner of simplex in (i, j, k) coords
-        let j2: uint;
-        let k2: uint;
+        let i1: usize; // Offsets for second corner of simplex in (i, j, k) coords
+        let j1: usize;
+        let k1: usize;
+        let i2: usize; // Offsets for third corner of simplex in (i, j, k) coords
+        let j2: usize;
+        let k2: usize;
         if x0 >= y0 {
             if y0 >= z0 { // X Y Z order
                 i1 = 1;
@@ -321,14 +321,14 @@ impl NoiseGen for Simplex {
         let z3: f64 = z0 - 1.0 + 3.0 * G3;
 
         // Wrap the integer indices at 256, to avoid indexing perm[] out of bounds
-        let ii: uint = (i & 255) as uint;
-        let jj: uint = (j & 255) as uint;
-        let kk: uint = (k & 255) as uint;
+        let ii: usize = (i & 255) as usize;
+        let jj: usize = (j & 255) as usize;
+        let kk: usize = (k & 255) as usize;
         // Work out the hashed gradient indices of the four simplex corners
-        let gi0: uint = self.perm[ii + (self.perm[jj + (self.perm[kk] as uint)] as uint)] as uint;
-        let gi1: uint = self.perm[ii + i1 + (self.perm[jj + j1 + (self.perm[kk + k1] as uint)] as uint)] as uint;
-        let gi2: uint = self.perm[ii + i2 + (self.perm[jj + j2 + (self.perm[kk + k2] as uint)] as uint)] as uint;
-        let gi3: uint = self.perm[ii + 1 + (self.perm[jj + 1 + (self.perm[kk + 1] as uint)] as uint)] as uint;
+        let gi0: u8 = self.perm[ii + (self.perm[jj + (self.perm[kk] as usize)] as usize)] as u8;
+        let gi1: u8 = self.perm[ii + i1 + (self.perm[jj + j1 + (self.perm[kk + k1] as usize)] as usize)] as u8;
+        let gi2: u8 = self.perm[ii + i2 + (self.perm[jj + j2 + (self.perm[kk + k2] as usize)] as usize)] as u8;
+        let gi3: u8 = self.perm[ii + 1 + (self.perm[jj + 1 + (self.perm[kk + 1] as usize)] as usize)] as u8;
 
         // Calculate the contribution from the four corners
         let mut t0: f64 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
