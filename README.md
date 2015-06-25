@@ -2,6 +2,7 @@
 
 **noisy** is a procedural noise generation library written for Rust.
 
+**Note: This crate is no longer maintained. Please use [noise-rs](https://github.com/bjz/noise-rs).**
 ## Using **noisy**
 All the generators of **noisy** are grouped in one place: the `gen` module.
 
