@@ -13,7 +13,7 @@ fn main() {
     let simplex = Simplex::new();
 
     // Iterate over the columnss.
-    for x0 in range(0, WIDTH) {
+    for x0 in 0..WIDTH {
         // Generate a noise value using the x coordinate.
         let mut val = simplex.noise1d(123.0 + x0 as f64 * 0.02);
 

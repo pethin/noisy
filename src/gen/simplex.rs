@@ -6,7 +6,7 @@
 //! With Optimisations by Peter Eastman (peastman@drizzle.stanford.edu).
 //! Better rank ordering method by Stefan Gustavson in 2012.
 
-use std::rand::{ Rng, XorShiftRng, weak_rng };
+use rand::{ Rng, XorShiftRng, weak_rng };
 
 use utils::fast_floor;
 use utils::grad::{ grad1, grad2, grad3 };
@@ -47,7 +47,7 @@ impl Simplex {
     /// # Example
     ///
     /// ```rust
-    /// # use std::rand::StdRng;
+    /// # use rand::StdRng;
     /// use noisy::gen::Simplex;
     ///
     /// let mut rng: StdRng = StdRng::new().unwrap();
@@ -59,7 +59,7 @@ impl Simplex {
     /// # Example
     ///
     /// ```rust
-    /// # use std::rand::{StdRng, SeedableRng};
+    /// # use rand::{StdRng, SeedableRng};
     /// use noisy::gen::Simplex;
     ///
     /// let seed: &[_] = &[1337];
@@ -88,8 +88,8 @@ impl NoiseGen for Simplex {
     #[allow(non_snake_case)]
     fn noise1d(&self, xin: f64) -> f64 {
         // Noise contributions
-        let mut n0: f64;
-        let mut n1: f64;
+        let n0: f64;
+        let n1: f64;
 
         let i0: i64 = fast_floor(xin);
         let i1: i64 = i0 + 1;
@@ -130,9 +130,9 @@ impl NoiseGen for Simplex {
     #[allow(non_snake_case)]
     fn noise2d(&self, xin: f64, yin: f64) -> f64 {
         // Noise contributions from the three corners
-        let mut n0: f64;
-        let mut n1: f64;
-        let mut n2: f64;
+        let n0: f64;
+        let n1: f64;
+        let n2: f64;
 
         // Skew the input space to determine which simplex cell we're in
         let s: f64 = (xin + yin) * F2; // Hairy factor for 2D
@@ -225,10 +225,10 @@ impl NoiseGen for Simplex {
     #[allow(non_snake_case)]
     fn noise3d(&self, xin: f64, yin: f64, zin: f64) -> f64 {
         // Noise contributions from the four corners
-        let mut n0: f64;
-        let mut n1: f64;
-        let mut n2: f64;
-        let mut n3: f64;
+        let n0: f64;
+        let n1: f64;
+        let n2: f64;
+        let n3: f64;
 
         // Skew the input space to determine which simplex cell we're in
         let s: f64 = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
