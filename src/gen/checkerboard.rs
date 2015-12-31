@@ -4,10 +4,8 @@ use utils::if_else;
 use gen::NoiseGen;
 
 
-use std::num::Float;
-
 /// A check pattern generator.
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 pub struct Checkerboard;
 
 impl Checkerboard {

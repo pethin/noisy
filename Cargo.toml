@@ -28,3 +28,7 @@ name = "simplex2d"
 
 [[example]]
 name = "fromseed"
+
+[dependencies]
+
+rand = "0.3"

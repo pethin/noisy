@@ -1,5 +1,3 @@
-#![feature(rand)]
-
 /*!
 # noisy
 
@@ -60,11 +58,11 @@ cargo test
 */
 
 #![warn(missing_docs)]
-
+#![cfg_attr(feature = "nightly", feature(test))]
 
 extern crate rand;
 
-#[cfg(test)]
+#[cfg(all(feature = "nightly", test))]
 extern crate test;
 
 pub mod utils;
@@ -73,5 +71,5 @@ pub mod gen;
 #[cfg(test)]
 mod tests;
 
-#[cfg(test)]
+#[cfg(all(feature = "nightly", test))]
 mod bench;

@@ -1,5 +1,5 @@
-use std::rand::{ thread_rng, random };
-use std::rand::{ Rng, OsRng, StdRng, ThreadRng, IsaacRng, Isaac64Rng, XorShiftRng };
+use rand::{ thread_rng, random };
+use rand::{ Rng, OsRng, StdRng, ThreadRng, IsaacRng, Isaac64Rng, XorShiftRng };
 
 use gen::{NoiseGen, Perlin};
 
@@ -65,7 +65,7 @@ fn test_perlin_from_threadrng() {
 #[test]
 fn test_perlin_noise1d() {
     let perlin = Perlin::new();
-    for _ in range(0us, 10000) {
+    for _ in 0usize..10000 {
         perlin.noise1d(random());
     }
 }
@@ -73,7 +73,7 @@ fn test_perlin_noise1d() {
 #[test]
 fn test_perlin_noise2d() {
     let perlin = Perlin::new();
-    for _ in range(0us, 10000) {
+    for _ in 0usize..10000 {
         perlin.noise2d(
             random(),
             random()
@@ -84,7 +84,7 @@ fn test_perlin_noise2d() {
 #[test]
 fn test_perlin_noise3d() {
     let perlin = Perlin::new();
-    for _ in range(0us, 10000) {
+    for _ in 0usize..10000 {
         perlin.noise3d(
             random(),
             random(),

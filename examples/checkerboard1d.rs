@@ -3,7 +3,7 @@ extern crate noisy;
 use noisy::gen::{ NoiseGen, Checkerboard };
 
 // Width of the output in columns.
-static WIDTH: usize = 80;
+static WIDTH: isize = 80;
 
 // A five color gradient used for the output.
 static GRADIENT: [&'static str; 2] = [" ", "█"];
@@ -13,7 +13,7 @@ fn main() {
     let checkerboard = Checkerboard::new();
 
     // Iterate over the columnss.
-    for x in range(-WIDTH/2, WIDTH/2) {
+    for x in (-WIDTH/2)..(WIDTH/2) {
         // Generate a noise value using the x coordinate.
         let mut val = checkerboard.noise1d(x as f64 * 0.5);
 

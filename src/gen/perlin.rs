@@ -5,7 +5,7 @@
 //! Which is based on example code by Ken Perlin at Siggraph 2002.
 //! With optimisations by Stefan Gustavson (stegu@itn.liu.se).
 
-use std::rand::{ Rng, XorShiftRng, weak_rng };
+use rand::{ Rng, XorShiftRng, weak_rng };
 
 use utils::{ fade, fast_floor, lerp };
 use utils::grad::{ grad1, grad2, grad3 };
@@ -41,7 +41,7 @@ impl Perlin {
     /// # Example
     ///
     /// ```rust
-    /// # use std::rand::StdRng;
+    /// # use rand::StdRng;
     /// use noisy::gen::Perlin;
     ///
     /// let mut rng: StdRng = StdRng::new().unwrap();
@@ -53,7 +53,7 @@ impl Perlin {
     /// # Example
     ///
     /// ```rust
-    /// # use std::rand::{StdRng, SeedableRng};
+    /// # use rand::{StdRng, SeedableRng};
     /// use noisy::gen::Perlin;
     ///
     /// let seed: &[_] = &[1337];

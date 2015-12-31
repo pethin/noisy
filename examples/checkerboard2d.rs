@@ -16,9 +16,9 @@ fn main() {
 
     // Iterate over the rows.
     // HEIGHT is divided by two for a better aspect ratio.
-    for y in range(0, HEIGHT / 2) {
+    for y in 0..(HEIGHT / 2) {
         // Iterate over the columns in the rows.
-        for x in range(0, WIDTH) {
+        for x in 0..WIDTH {
             // Generate a noise value using the x and y coordinates.
             let mut val = checkerboard.noise2d(
                 x as f64 * 0.5,
